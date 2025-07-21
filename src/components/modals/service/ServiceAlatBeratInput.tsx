@@ -1,4 +1,4 @@
-import ServiceAlatBeratForm from "../../form/form-input/service/ServiceAlatBeratForm";
+import ServiceAlatBeratForm from "../../form/form-input/servis/ServiceAlatBeratForm";
 import PageMeta from "../../common/PageMeta";
 import { FaTimes } from "react-icons/fa";
 import { ServisData } from "../../../types/service";

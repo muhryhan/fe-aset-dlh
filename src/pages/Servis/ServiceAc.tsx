@@ -1,7 +1,7 @@
 import ComponentCard from "../../components/common/ComponentCard";
 import PageBreadcrumb from "../../components/common/PageBreadCrumb";
 import PageMeta from "../../components/common/PageMeta";
-import TableServiceAc from "../../components/tables/Service/ServiceAcTable";
+import TableServiceAc from "../../components/tables/Servis/ServiceAcTable";
 import FormAc from "../../components/form/form-disable/AcFormD";
 
 export default function ServiceAc() {

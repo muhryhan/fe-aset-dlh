@@ -1,6 +1,6 @@
 import PageBreadcrumb from "../../components/common/PageBreadCrumb";
 import PageMeta from "../../components/common/PageMeta";
-import TableSerberKendaraan from "../../components/tables/ServiceBerkala/SerberKendaraanTable";
+import TableSerberKendaraan from "../../components/tables/ServisBerkala/SerberKendaraanTable";
 
 export default function SerberKendaraan() {
   return (

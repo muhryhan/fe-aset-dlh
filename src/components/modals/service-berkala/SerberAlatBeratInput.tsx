@@ -1,4 +1,4 @@
-import SerberAlatBeratForm from "../../form/form-input/service-berkala/SerberAlatBeratForm";
+import SerberAlatBeratForm from "../../form/form-input/servis-berkala/SerberAlatBeratForm";
 import PageMeta from "../../common/PageMeta";
 import { FaTimes } from "react-icons/fa";
 import { SerberAlatBeratData } from "../../../types/serberAlatBerat";

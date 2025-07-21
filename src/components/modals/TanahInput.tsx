@@ -1,29 +1,27 @@
-import ServiceKendaraanForm from "../../form/form-input/servis/ServiceKendaraanForm";
-import PageMeta from "../../common/PageMeta";
+import TanahForm from "../form/form-input/TanahForm";
+import PageMeta from "../common/PageMeta";
 import { FaTimes } from "react-icons/fa";
-import { ServisData } from "../../../types/service";
+import { TanahData } from "../../types/tanah";
 
-interface ServisKendaraanInputModalProps {
+interface TanahInputModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSuccess?: () => void;
-  no_polisi?: string;
-  initialData?: Partial<ServisData>;
+  initialData?: Partial<TanahData>;
 }
 
-export default function ServiceKendaraanInput({
+export default function TanahInput({
   isOpen,
   onClose,
   onSuccess,
   initialData,
-  no_polisi,
-}: ServisKendaraanInputModalProps) {
+}: TanahInputModalProps) {
   if (!isOpen) return null;
   return (
-    <div className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/60 p-4">
+    <div className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/60 p-4 ">
       <PageMeta
-        title="Input Data Servis Kendaraan"
-        description="Halaman Input Data Servis Kendaraan"
+        title="Input Data Tanah"
+        description="Halaman Input Data Tanah"
       />
 
       {/* Modal box */}
@@ -36,11 +34,7 @@ export default function ServiceKendaraanInput({
 
         {/* Scrollable Content */}
         <div className="overflow-y-auto px-6 pb-6 bg-white dark:bg-gray-800">
-          <ServiceKendaraanForm
-            no_polisi={no_polisi}
-            onSuccess={onSuccess}
-            initialData={initialData}
-          />
+          <TanahForm onSuccess={onSuccess} initialData={initialData}/>
         </div>
       </div>
     </div>

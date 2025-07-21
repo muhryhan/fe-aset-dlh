@@ -1,4 +1,4 @@
-import SerberAcForm from "../../form/form-input/service-berkala/SerberAcForm";
+import SerberAcForm from "../../form/form-input/servis-berkala/SerberAcForm";
 import PageMeta from "../../common/PageMeta";
 import { FaTimes } from "react-icons/fa";
 import { SerberAcData } from "../../../types/serberAc";

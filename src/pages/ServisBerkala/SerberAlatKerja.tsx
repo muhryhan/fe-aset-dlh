@@ -1,6 +1,6 @@
 import PageBreadcrumb from "../../components/common/PageBreadCrumb";
 import PageMeta from "../../components/common/PageMeta";
-import TableSerberAlatKerja from "../../components/tables/ServiceBerkala/SerberAlatKerjaTable";
+import TableSerberAlatKerja from "../../components/tables/ServisBerkala/SerberAlatKerjaTable";
 
 export default function SerberAlatKerja() {
   return (

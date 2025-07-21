@@ -1,4 +1,4 @@
-import ServiceAlatKerjaForm from "../../form/form-input/service/ServiceAlatKerjaForm";
+import ServiceAlatKerjaForm from "../../form/form-input/servis/ServiceAlatKerjaForm";
 import PageMeta from "../../common/PageMeta";
 import { FaTimes } from "react-icons/fa";
 import { ServisData } from "../../../types/service";

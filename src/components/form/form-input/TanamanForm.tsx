@@ -16,7 +16,7 @@ type Props = {
   onSuccess?: () => void;
 };
 
-export default function AlatKerjaFormInput({ initialData, onSuccess }: Props) {
+export default function TanamanFormInput({ initialData, onSuccess }: Props) {
   const emptyTanaman: TanamanData = {
     id_tanaman: 0,
     gambar: "",

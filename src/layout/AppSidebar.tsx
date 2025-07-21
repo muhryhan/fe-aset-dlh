@@ -12,6 +12,7 @@ import {
   LawnIcon,
   AcIcon,
   PeriodicIcon,
+  LandIcon
 } from "../icons";
 import { useSidebar } from "../context/SidebarContext";
 
@@ -47,6 +48,11 @@ const navItems: NavItem[] = [
     icon: <AcIcon />,
     name: "Ac",
     path: "/ac",
+  },
+  {
+    icon: <LandIcon />,
+    name: "Tanah",
+    path: "/tanah",
   },
   {
     icon: <PlantIcon />,

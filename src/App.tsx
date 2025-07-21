@@ -13,17 +13,16 @@ import AlatBerat from "./pages/AlatBerat";
 import AlatKerja from "./pages/AlatKerja";
 import Ac from "./pages/Ac";
 import Tanaman from "./pages/Tanaman";
+import Tanah from "./pages/Tanah";
 import DistribusiTanaman from "./pages/DistTanaman/DistribusiTanaman";
-import ServiceKendaraan from "./pages/Service/ServiceKendaraan";
-import ServiceAlatBerat from "./pages/Service/ServiceAlatBerat";
-import ServiceAlatKerja from "./pages/Service/ServiceAlatKerja";
-import ServiceAc from "./pages/Service/ServiceAc";
-import SerberKendaraan from "./pages/ServiceBerkala/SerberKendaraan";
-import SerberAlatBerat from "./pages/ServiceBerkala/SerberAlatBerat";
-import SerberAlatKerja from "./pages/ServiceBerkala/SerberAlatKerja";
-import SerberAc from "./pages/ServiceBerkala/SerberAc";
-import TamanKota from "./pages/TamanKota";
-import TPUKota from "./pages/TPU";
+import ServiceKendaraan from "./pages/Servis/ServiceKendaraan";
+import ServiceAlatBerat from "./pages/Servis/ServiceAlatBerat";
+import ServiceAlatKerja from "./pages/Servis/ServiceAlatKerja";
+import ServiceAc from "./pages/Servis/ServiceAc";
+import SerberKendaraan from "./pages/ServisBerkala/SerberKendaraan";
+import SerberAlatBerat from "./pages/ServisBerkala/SerberAlatBerat";
+import SerberAlatKerja from "./pages/ServisBerkala/SerberAlatKerja";
+import SerberAc from "./pages/ServisBerkala/SerberAc";
 import ScanPage from "./pages/ScanQrCode/ScanPage";
 
 export default function App() {
@@ -54,8 +53,7 @@ export default function App() {
           <Route path="/alat-kerja" element={<AlatKerja />} />
           <Route path="/ac" element={<Ac />} />
           <Route path="/tanaman" element={<Tanaman />} />
-          <Route path="/taman-kota" element={<TamanKota />} />
-          <Route path="/tpu" element={<TPUKota />} />
+          <Route path="/tanah" element={<Tanah />} />
 
           {/* Service Pages */}
           <Route

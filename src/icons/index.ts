@@ -65,6 +65,7 @@ import { ReactComponent as ParkIcon } from "./park.svg?react";
 import { ReactComponent as BurialIcon } from "./burial.svg?react";
 import { ReactComponent as QRIcon } from "./qr.svg?react";
 import { ReactComponent as TriCycleIcon } from "./triCycle.svg?react";
+import { ReactComponent as LandIcon } from "./land.svg?react";
 
 export {
   ErrorHexaIcon,
@@ -134,4 +135,5 @@ export {
   BurialIcon,
   QRIcon,
   TriCycleIcon,
+  LandIcon,
 };

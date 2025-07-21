@@ -11,7 +11,6 @@ export function useFetch<T>(endpoint: string | null | undefined) {
     try {
       const response = await api.get(endpoint);
       setData(response.data.data ?? []);
-      console.log(response);
     } catch (error) {
       console.error("Gagal fetch data:", error);
       setData([]);

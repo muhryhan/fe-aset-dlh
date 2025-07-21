@@ -1,4 +1,4 @@
-import SerberKendaraanForm from "../../form/form-input/service-berkala/SerberKendaraanForm";
+import SerberKendaraanForm from "../../form/form-input/servis-berkala/SerberKendaraanForm";
 import PageMeta from "../../common/PageMeta";
 import { FaTimes } from "react-icons/fa";
 import { SerberKendaraanData } from "../../../types/serberKendaraan";
