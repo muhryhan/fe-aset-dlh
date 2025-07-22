@@ -16,7 +16,7 @@ import {
 import { CardData } from "../../types/cardAsset";
 
 const cardConfig: {
-  key: keyof CardData | "TamanKota" | "TPU";
+  key: keyof CardData
   label: string;
   icon: React.FC<{ className?: string }>;
   fixedValue?: number;
@@ -29,7 +29,7 @@ const cardConfig: {
   { key: "AlatKerja", label: "Alat Kerja", icon: LawnIcon },
   { key: "Ac", label: "Ac", icon: AcIcon },
   { key: "Tanaman", label: "Tanaman", icon: PlantIcon },
-  { key: "TamanKota", label: "Taman Kota", icon: ParkIcon },
+  { key: "Taman", label: "Taman Kota", icon: ParkIcon },
   { key: "TPU", label: "Tempat Pemakaman Umum", icon: BurialIcon },
 ];
 

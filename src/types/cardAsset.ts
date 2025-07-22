@@ -7,4 +7,6 @@ export interface CardData {
   AlatKerja: number;
   Ac: number;
   Tanaman: number;
+  Taman: number;
+  TPU: number;
 }
