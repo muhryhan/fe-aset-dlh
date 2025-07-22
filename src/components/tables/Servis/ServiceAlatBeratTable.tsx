@@ -24,7 +24,7 @@ import {
   TableCell,
 } from "../../ui/table";
 
-import ServiceAlatBeratInput from "../../modals/service/ServiceAlatBeratInput";
+import ServiceAlatBeratInput from "../../modals/servis/ServiceAlatBeratInput";
 import api from "../../../services/api";
 import { ServisData } from "../../../types/service";
 

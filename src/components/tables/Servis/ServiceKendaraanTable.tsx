@@ -22,7 +22,7 @@ import {
   TableCell,
 } from "../../ui/table";
 
-import ServiceKendaraanInput from "../../modals/service/ServiceKendaraanInput";
+import ServiceKendaraanInput from "../../modals/servis/ServiceKendaraanInput";
 import api from "../../../services/api";
 import { ServisData } from "../../../types/service";
 

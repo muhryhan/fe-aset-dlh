@@ -14,7 +14,7 @@ import {
 
 import { EditButton } from "../../ui/button/ActionButton";
 import SearchInput from "../../ui/search/Search";
-import SerberKendaraanInput from "../../modals/service-berkala/SerberKendaraanInput";
+import SerberKendaraanInput from "../../modals/servis-berkala/SerberKendaraanInput";
 import api from "../../../services/api";
 import { SerberKendaraanData } from "../../../types/serberKendaraan";
 

@@ -14,7 +14,7 @@ import {
 
 import { EditButton } from "../../ui/button/ActionButton";
 import SearchInput from "../../ui/search/Search";
-import SerberAlatKerjaInput from "../../modals/service-berkala/SerberAlatKerjaInput";
+import SerberAlatKerjaInput from "../../modals/servis-berkala/SerberAlatKerjaInput";
 import api from "../../../services/api";
 import { SerberAlatKerjaData } from "../../../types/serberAlatKerja";
 
@@ -77,11 +77,7 @@ export default function SerberAlatKerjaTable() {
             {/* Table Header */}
             <TableHeader className="border-b border-gray-100 dark:border-white/[0.05]">
               <TableRow>
-                {[
-                  "No. Registrasi",
-                  "Oli Mesin",
-                  "Aksi",
-                ].map((text) => (
+                {["No. Registrasi", "Oli Mesin", "Aksi"].map((text) => (
                   <TableCell
                     key={text}
                     isHeader

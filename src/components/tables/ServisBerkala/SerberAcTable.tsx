@@ -14,7 +14,7 @@ import {
 
 import { EditButton } from "../../ui/button/ActionButton";
 import SearchInput from "../../ui/search/Search";
-import SerberAcInput from "../../modals/service-berkala/SerberAcInput";
+import SerberAcInput from "../../modals/servis-berkala/SerberAcInput";
 import api from "../../../services/api";
 import { SerberAcData } from "../../../types/serberAc";
 

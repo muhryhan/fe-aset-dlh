@@ -24,7 +24,7 @@ import {
   TableCell,
 } from "../../ui/table";
 
-import ServiceAlatKerjaInput from "../../modals/service/ServiceAlatKerjaInput";
+import ServiceAlatKerjaInput from "../../modals/servis/ServiceAlatKerjaInput";
 import api from "../../../services/api";
 import { ServisData } from "../../../types/service";
 

@@ -24,7 +24,7 @@ import {
   TableCell,
 } from "../../ui/table";
 
-import ServiceAcInput from "../../modals/service/ServiceAcInput";
+import ServiceAcInput from "../../modals/servis/ServiceAcInput";
 import api from "../../../services/api";
 import { ServisData } from "../../../types/service";
 
