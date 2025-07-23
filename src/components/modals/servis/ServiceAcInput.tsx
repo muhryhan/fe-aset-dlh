@@ -1,4 +1,4 @@
-import ServiceAcForm from "../../form/form-input/servis/ServiceAcForm";
+import ServiceAcForm from "../../form/form-input/servis/ServisAcForm";
 import PageMeta from "../../common/PageMeta";
 import { FaTimes } from "react-icons/fa";
 import { ServisData } from "../../../types/service";

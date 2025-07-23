@@ -3,6 +3,8 @@ import { useSearch } from "../../../hooks/useSearch";
 import { usePagination } from "../../../hooks/usePagination";
 import { useFetch } from "../../../hooks/useFetch";
 import { formatDate } from "../../../utils/dateUtils";
+import { hakAkses } from "../../../utils/aclUtils";
+import { useAuthStore } from "../../../stores/authStore";
 
 import {
   Table,
@@ -19,6 +21,7 @@ import api from "../../../services/api";
 import { SerberAcData } from "../../../types/serberAc";
 
 export default function SerberAcTable() {
+  const role = useAuthStore((s) => s.role);
   const { data, loading, fetchData } = useFetch<SerberAcData>(
     "/api/servisberkalaac"
   );
@@ -81,7 +84,7 @@ export default function SerberAcTable() {
                   <TableCell
                     key={text}
                     isHeader
-                    className="px-5 py-3 font-bold text-center text-gray-700 text-start text-theme-md dark:text-gray-400"
+                    className="px-5 py-3 text-center font-bold text-gray-700 text-theme-md dark:text-gray-400"
                   >
                     {text}
                   </TableCell>
@@ -106,9 +109,11 @@ export default function SerberAcTable() {
                     ))}
                     <TableCell className="px-5 py-3 text-center text-theme-md font-medium text-gray-800 dark:text-gray-200">
                       <div className="flex items-center gap-2">
+                        {role && hakAkses(role, "serberAc", "update") && (
                         <EditButton
                           onClick={() => handleEdit(item.no_registrasi)}
                         />
+                        )}
                       </div>
                     </TableCell>
                   </TableRow>

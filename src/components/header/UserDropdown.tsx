@@ -10,7 +10,7 @@ export default function UserDropdown() {
   const navigate = useNavigate();
 
   function handleSignOut() {
-    // localStorage.removeItem("token");
+    localStorage.removeItem("token");
     api.post("/api/logout");
     navigate("/");
   }

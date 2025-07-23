@@ -92,7 +92,7 @@ export default function TanamanKeluarTable() {
           <SearchInput value={search} onChange={setSearch} />
           <ExcelButton
             onClick={() =>
-              handleExportExcel(exportRows, `tanaman-${id_tanaman ?? "umum"}`)
+              handleExportExcel(exportRows, `Data Aset ${id_tanaman ?? "Tanaman Keluar"}`)
             }
           />
           <PDFButton
@@ -100,7 +100,7 @@ export default function TanamanKeluarTable() {
               handleExportPdf(
                 exportHeaders,
                 exportRows,
-                `tanaman-${id_tanaman ?? "umum"}`
+                `Data Aset ${id_tanaman ?? "Tanaman Keluar"}`
               )
             }
           />

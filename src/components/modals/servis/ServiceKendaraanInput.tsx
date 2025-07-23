@@ -1,4 +1,4 @@
-import ServiceKendaraanForm from "../../form/form-input/servis/ServiceKendaraanForm";
+import ServiceKendaraanForm from "../../form/form-input/servis/ServisKendaraanForm";
 import PageMeta from "../../common/PageMeta";
 import { FaTimes } from "react-icons/fa";
 import { ServisData } from "../../../types/service";

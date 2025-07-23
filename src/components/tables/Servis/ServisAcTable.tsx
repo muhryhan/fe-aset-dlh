@@ -6,6 +6,8 @@ import { useFetch } from "../../../hooks/useFetch";
 import { handleExportExcel } from "../../../handler/handleExportExcel";
 import { handleExportPdf } from "../../../handler/handleExportPdf";
 import { formatDate } from "../../../utils/dateUtils";
+import { hakAkses } from "../../../utils/aclUtils";
+import { useAuthStore } from "../../../stores/authStore";
 
 import SearchInput from "../../ui/search/Search";
 import {
@@ -24,11 +26,12 @@ import {
   TableCell,
 } from "../../ui/table";
 
-import ServiceAlatBeratInput from "../../modals/servis/ServiceAlatBeratInput";
+import ServiceAcInput from "../../modals/servis/ServiceAcInput";
 import api from "../../../services/api";
 import { ServisData } from "../../../types/service";
 
-export default function ServiceAlatBeratTable() {
+export default function ServiceAcTable() {
+  const role = useAuthStore((s) => s.role);
   const { no_registrasi } = useParams<{ no_registrasi: string }>();
   const { data, setData, loading, fetchData } = useFetch<ServisData>(
     no_registrasi ? `/api/servis/nounik/${no_registrasi}` : null
@@ -153,7 +156,10 @@ export default function ServiceAlatBeratTable() {
           <SearchInput value={search} onChange={setSearch} />
           <ExcelButton
             onClick={() =>
-              handleExportExcel(exportRows, `servis-${no_registrasi ?? "umum"}`)
+              handleExportExcel(
+                exportRows,
+                `Data Servis ${no_registrasi ?? "Ac"}`
+              )
             }
           />
           <PDFButton
@@ -161,7 +167,7 @@ export default function ServiceAlatBeratTable() {
               handleExportPdf(
                 exportHeaders,
                 exportRows,
-                `servis-${no_registrasi ?? "umum"}`
+                `Data Servis ${no_registrasi ?? "Ac"}`
               )
             }
           />
@@ -169,7 +175,7 @@ export default function ServiceAlatBeratTable() {
       </div>
 
       {isModalOpen && (
-        <ServiceAlatBeratInput
+        <ServiceAcInput
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
           onSuccess={() => {
@@ -363,17 +369,21 @@ export default function ServiceAlatBeratTable() {
                         </TableCell>
                         <TableCell className={cellClass}>
                           <div className="flex gap-2 justify-center">
-                            <EditButton
-                              onClick={() => {
-                                setSelected(item);
-                                setIsModalOpen(true);
-                              }}
-                            />
-                            {item.id_servis != null && (
-                              <DeleteButton
-                                onClick={() => handleDelete(item.id_servis!)}
+                            {role && hakAkses(role, "servisAc", "update") && (
+                              <EditButton
+                                onClick={() => {
+                                  setSelected(item);
+                                  setIsModalOpen(true);
+                                }}
                               />
                             )}
+                            {role &&
+                              hakAkses(role, "servisAc", "delete") &&
+                              item.id_servis != null && (
+                                <DeleteButton
+                                  onClick={() => handleDelete(item.id_servis!)}
+                                />
+                              )}
                           </div>
                         </TableCell>
                       </TableRow>

@@ -29,8 +29,11 @@ import {
 import api from "../../services/api";
 import KendaraanInput from "../modals/KendaraanInput";
 import { KendaraanData } from "../../types/kendaraan";
+import { hakAkses } from "../../utils/aclUtils";
+import { useAuthStore } from "../../stores/authStore";
 
 export default function KendaraanTable() {
+  const role = useAuthStore((s) => s.role);
   const { no_polisi } = useParams<{ no_polisi: string }>();
   const { data, setData, loading, fetchData } =
     useFetch<KendaraanData>("/api/kendaraan");
@@ -155,7 +158,10 @@ export default function KendaraanTable() {
           <SearchInput value={search} onChange={setSearch} />
           <ExcelButton
             onClick={() =>
-              handleExportExcel(exportRows, `servis-${no_polisi ?? "umum"}`)
+              handleExportExcel(
+                exportRows,
+                `Data Aset ${no_polisi ?? "Kendaraan"}`
+              )
             }
           />
           <PDFButton
@@ -163,7 +169,7 @@ export default function KendaraanTable() {
               handleExportPdf(
                 exportHeaders,
                 exportRows,
-                `servis-${no_polisi ?? "umum"}`
+                `Data Aset ${no_polisi ?? "Kendaraan"}`
               )
             }
           />
@@ -242,12 +248,16 @@ export default function KendaraanTable() {
                               )
                             }
                           />
-                          <EditButton
-                            onClick={() => handleEdit(item.no_polisi)}
-                          />
-                          <DeleteButton
-                            onClick={() => handleDelete(item.id_kendaraan)}
-                          />
+                          {role && hakAkses(role, "kendaraan", "update") && (
+                            <EditButton
+                              onClick={() => handleEdit(item.no_polisi)}
+                            />
+                          )}
+                          {role && hakAkses(role, "kendaraan", "delete") && (
+                            <DeleteButton
+                              onClick={() => handleDelete(item.id_kendaraan)}
+                            />
+                          )}
                         </div>
                       </TableCell>
                     </TableRow>

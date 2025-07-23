@@ -6,6 +6,9 @@ import { useFetch } from "../../../hooks/useFetch";
 import { handleExportExcel } from "../../../handler/handleExportExcel";
 import { handleExportPdf } from "../../../handler/handleExportPdf";
 import { formatDate } from "../../../utils/dateUtils";
+import { hakAkses } from "../../../utils/aclUtils";
+import { useAuthStore } from "../../../stores/authStore";
+
 import SearchInput from "../../ui/search/Search";
 import {
   AddButton,
@@ -14,6 +17,7 @@ import {
   ExcelButton,
   PDFButton,
 } from "../../ui/button/ActionButton";
+
 import {
   Table,
   TableHeader,
@@ -22,14 +26,15 @@ import {
   TableCell,
 } from "../../ui/table";
 
-import ServiceKendaraanInput from "../../modals/servis/ServiceKendaraanInput";
+import ServiceAlatKerjaInput from "../../modals/servis/ServiceAlatKerjaInput";
 import api from "../../../services/api";
 import { ServisData } from "../../../types/service";
 
-export default function ServiceKendaraanTable() {
-  const { no_polisi } = useParams<{ no_polisi: string }>();
+export default function ServiceAlatKerjaTable() {
+  const role = useAuthStore((s) => s.role);
+  const { no_registrasi } = useParams<{ no_registrasi: string }>();
   const { data, setData, loading, fetchData } = useFetch<ServisData>(
-    no_polisi ? `/api/servis/nounik/${no_polisi}` : null
+    no_registrasi ? `/api/servis/nounik/${no_registrasi}` : null
   );
 
   const { search, setSearch, filtered } = useSearch(
@@ -70,7 +75,7 @@ export default function ServiceKendaraanTable() {
     "px-5 py-3 font-bold text-center text-theme-sm text-gray-700 dark:text-gray-400";
 
   const columns = [
-    { header: "Nomor Polisi", accessor: (d: ServisData) => d.no_unik },
+    { header: "Nomor Registrasi", accessor: (d: ServisData) => d.no_unik },
     { header: "Tanggal", accessor: (d: ServisData) => d.tanggal },
     { header: "Nama Bengkel", accessor: (d: ServisData) => d.nama_bengkel },
     { header: "Biaya Servis", accessor: (d: ServisData) => d.biaya_servis },
@@ -151,7 +156,7 @@ export default function ServiceKendaraanTable() {
           <SearchInput value={search} onChange={setSearch} />
           <ExcelButton
             onClick={() =>
-              handleExportExcel(exportRows, `servis-${no_polisi ?? "umum"}`)
+              handleExportExcel(exportRows, `Data Servis ${no_registrasi ?? "Alat Kerja"}`)
             }
           />
           <PDFButton
@@ -159,7 +164,7 @@ export default function ServiceKendaraanTable() {
               handleExportPdf(
                 exportHeaders,
                 exportRows,
-                `servis-${no_polisi ?? "umum"}`
+                `Data Servis ${no_registrasi ?? "Alat Kerja"}`
               )
             }
           />
@@ -167,14 +172,14 @@ export default function ServiceKendaraanTable() {
       </div>
 
       {isModalOpen && (
-        <ServiceKendaraanInput
+        <ServiceAlatKerjaInput
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
           onSuccess={() => {
             setIsModalOpen(false);
             fetchData();
           }}
-          no_polisi={no_polisi}
+          no_registrasi={no_registrasi}
           initialData={selected ?? undefined}
         />
       )}
@@ -361,13 +366,17 @@ export default function ServiceKendaraanTable() {
                         </TableCell>
                         <TableCell className={cellClass}>
                           <div className="flex gap-2 justify-center">
+                            {role && hakAkses(role, "servisAlatKerja", "update") && (
                             <EditButton
                               onClick={() => {
                                 setSelected(item);
                                 setIsModalOpen(true);
                               }}
                             />
-                            {item.id_servis != null && (
+                            )}
+                            {role &&
+                              hakAkses(role, "servisAlatKerja", "delete") &&
+                            item.id_servis != null && (
                               <DeleteButton
                                 onClick={() => handleDelete(item.id_servis!)}
                               />

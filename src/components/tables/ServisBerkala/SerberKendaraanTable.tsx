@@ -3,6 +3,8 @@ import { useSearch } from "../../../hooks/useSearch";
 import { usePagination } from "../../../hooks/usePagination";
 import { useFetch } from "../../../hooks/useFetch";
 import { formatDate } from "../../../utils/dateUtils";
+import { hakAkses } from "../../../utils/aclUtils";
+import { useAuthStore } from "../../../stores/authStore";
 
 import {
   Table,
@@ -19,6 +21,7 @@ import api from "../../../services/api";
 import { SerberKendaraanData } from "../../../types/serberKendaraan";
 
 export default function SerberKendaraanTable() {
+  const role = useAuthStore((s) => s.role);
   const { data, loading, fetchData } = useFetch<SerberKendaraanData>(
     "/api/servisberkalakendaraan"
   );
@@ -121,9 +124,11 @@ export default function SerberKendaraanTable() {
                     ))}
                     <TableCell className="px-5 py-3 text-center text-theme-md font-medium text-gray-800 dark:text-gray-200">
                       <div className="flex items-center gap-2">
+                        {role && hakAkses(role, "serberAc", "update") && (
                         <EditButton
                           onClick={() => handleEdit(item.no_polisi)}
                         />
+                        )}
                       </div>
                     </TableCell>
                   </TableRow>

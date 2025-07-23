@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../../services/api";
-import { ChevronLeftIcon, EyeCloseIcon, EyeIcon, QRIcon } from "../../icons";
+import { EyeCloseIcon, EyeIcon, QRIcon } from "../../icons";
 import Label from "../form/Label";
 import Input from "../form/input/InputField";
 import Button from "../ui/button/Button";
+import { useAuthStore } from "../../stores/authStore";
 
 export default function SignInForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -12,6 +13,7 @@ export default function SignInForm() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const login = useAuthStore((s) => s.login);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,12 +27,20 @@ export default function SignInForm() {
 
     try {
       const response = await api.post("/api/login", { username, password });
-      const { token, id_user } = response.data;
 
+      console.log({ response });
+      const token = response.data.token;
+      const role = response.data.role;
+      const user = {
+        id: response.data.id_user,
+        name: response.data.username,
+      };
+
+      login({ token, role, user });
       // Simpan token ke cookie dengan opsi dasar (NOTE: masih raw; pakai httpOnly dari server jika memungkinkan)
       document.cookie = `token=${token}; path=/;`;
-      document.cookie = `id_user=${id_user}; path=/;`;
-      document.cookie = `username=${username}; path=/;`;
+      document.cookie = `id_user=${user.id}; path=/;`;
+      document.cookie = `username=${user.name}; path=/;`;
 
       navigate("/home");
     } catch (err) {
@@ -43,16 +53,6 @@ export default function SignInForm() {
 
   return (
     <div className="flex flex-col flex-1">
-      <div className="w-full max-w-md pt-10 mx-auto">
-        <Link
-          to="/"
-          className="inline-flex items-center text-sm text-gray-500 transition-colors hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
-        >
-          <ChevronLeftIcon className="size-5" />
-          Kembali ke beranda
-        </Link>
-      </div>
-
       <div className="flex flex-col justify-center flex-1 w-full max-w-md mx-auto">
         <div>
           <div className="flex justify-center mb-6">

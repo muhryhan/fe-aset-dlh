@@ -6,6 +6,8 @@ import { usePagination } from "../../hooks/usePagination";
 import { useFetch } from "../../hooks/useFetch";
 import { handleExportExcel } from "../../handler/handleExportExcel";
 import { handleExportPdf } from "../../handler/handleExportPdf";
+import { hakAkses } from "../../utils/aclUtils";
+import { useAuthStore } from "../../stores/authStore";
 
 import SearchInput from "../ui/search/Search";
 import {
@@ -30,6 +32,7 @@ import TanamanInput from "../modals/TanamanInput";
 import { TanamanData } from "../../types/tanaman";
 
 export default function TanamanTable() {
+  const role = useAuthStore((s) => s.role);
   const { id_tanaman } = useParams<{ id_tanaman: string }>();
   const { data, setData, loading, fetchData } =
     useFetch<TanamanData>("/api/tanaman");
@@ -124,7 +127,10 @@ export default function TanamanTable() {
           <SearchInput value={search} onChange={setSearch} />
           <ExcelButton
             onClick={() =>
-              handleExportExcel(exportRows, `tanaman-${id_tanaman ?? "umum"}`)
+              handleExportExcel(
+                exportRows,
+                `Data Aset ${id_tanaman ?? "Tanaman"}`
+              )
             }
           />
           <PDFButton
@@ -132,7 +138,7 @@ export default function TanamanTable() {
               handleExportPdf(
                 exportHeaders,
                 exportRows,
-                `tanaman-${id_tanaman ?? "umum"}`
+                `Data Aset ${id_tanaman ?? "Tanaman"}`
               )
             }
           />
@@ -211,10 +217,16 @@ export default function TanamanTable() {
                               )
                             }
                           />
-                          <EditButton onClick={() => handleEdit(item.id_tanaman)} />
-                          <DeleteButton
-                            onClick={() => handleDelete(item.id_tanaman)}
-                          />
+                          {role && hakAkses(role, "tanaman", "update") && (
+                            <EditButton
+                              onClick={() => handleEdit(item.id_tanaman)}
+                            />
+                          )}
+                          {role && hakAkses(role, "tanaman", "delete") && (
+                            <DeleteButton
+                              onClick={() => handleDelete(item.id_tanaman)}
+                            />
+                          )}
                         </div>
                       </TableCell>
                     </TableRow>

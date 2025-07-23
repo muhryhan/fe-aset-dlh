@@ -7,12 +7,11 @@ export function localDate(dateStr: string | Date): string {
 }
 
 // Tampilan UI
-export function formatDate(input?: string | Date): string {
-  if (!input) return "";
+export function formatDate(input?: string) {
+  const utcDate = new Date(String(input));
+  const localWitaDate = utcDate.toLocaleDateString("id-ID", {
+    timeZone: "Asia/Makassar",
+  });
 
-  const date = typeof input === "string" ? new Date(input) : input;
-
-  if (isNaN(date.getTime())) return "";
-
-  return date.toISOString().split("T")[0];
+  return localWitaDate;
 }

@@ -6,6 +6,8 @@ import { usePagination } from "../../hooks/usePagination";
 import { useFetch } from "../../hooks/useFetch";
 import { handleExportExcel } from "../../handler/handleExportExcel";
 import { handleExportPdf } from "../../handler/handleExportPdf";
+import { hakAkses } from "../../utils/aclUtils";
+import { useAuthStore } from "../../stores/authStore";
 
 import SearchInput from "../ui/search/Search";
 import {
@@ -30,6 +32,7 @@ import AcInput from "../modals/AcInput";
 import { AcData } from "../../types/ac";
 
 export default function AcTable() {
+  const role = useAuthStore((s) => s.role);
   const { no_registrasi } = useParams<{ no_registrasi: string }>();
   const { data, setData, loading, fetchData } = useFetch<AcData>("/api/ac");
 
@@ -148,7 +151,7 @@ export default function AcTable() {
           <SearchInput value={search} onChange={setSearch} />
           <ExcelButton
             onClick={() =>
-              handleExportExcel(exportRows, `servis-${no_registrasi ?? "umum"}`)
+              handleExportExcel(exportRows, `Data Aset ${no_registrasi ?? "Ac"}`)
             }
           />
           <PDFButton
@@ -156,7 +159,7 @@ export default function AcTable() {
               handleExportPdf(
                 exportHeaders,
                 exportRows,
-                `servis-${no_registrasi ?? "umum"}`
+                `Data Aset ${no_registrasi ?? "Ac"}`
               )
             }
           />
@@ -235,12 +238,16 @@ export default function AcTable() {
                               )
                             }
                           />
-                          <EditButton
-                            onClick={() => handleEdit(item.no_registrasi)}
-                          />
-                          <DeleteButton
-                            onClick={() => handleDelete(item.id_ac)}
-                          />
+                          {role && hakAkses(role, "ac", "update") && (
+                            <EditButton
+                              onClick={() => handleEdit(item.no_registrasi)}
+                            />
+                          )}
+                          {role && hakAkses(role, "ac", "delete") && (
+                            <DeleteButton
+                              onClick={() => handleDelete(item.id_ac)}
+                            />
+                          )}
                         </div>
                       </TableCell>
                     </TableRow>
