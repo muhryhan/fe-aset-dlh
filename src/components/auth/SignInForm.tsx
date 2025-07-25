@@ -27,8 +27,6 @@ export default function SignInForm() {
 
     try {
       const response = await api.post("/api/login", { username, password });
-
-      console.log({ response });
       const token = response.data.token;
       const role = response.data.role;
       const user = {
@@ -37,7 +35,7 @@ export default function SignInForm() {
       };
 
       login({ token, role, user });
-      // Simpan token ke cookie dengan opsi dasar (NOTE: masih raw; pakai httpOnly dari server jika memungkinkan)
+      
       document.cookie = `token=${token}; path=/;`;
       document.cookie = `id_user=${user.id}; path=/;`;
       document.cookie = `username=${user.name}; path=/;`;

@@ -1,19 +1,18 @@
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { DropdownItem } from "../ui/dropdown/DropdownItem";
 import { Dropdown } from "../ui/dropdown/Dropdown";
 import Button from "../ui/button/Button";
 import api from "../../services/api";
+import { logoutUser } from "../../services/api";
 
 export default function UserDropdown() {
   const [isOpen, setIsOpen] = useState(false);
-  const navigate = useNavigate();
 
   function handleSignOut() {
-    localStorage.removeItem("token");
-    api.post("/api/logout");
-    navigate("/");
-  }
+  api.post("/api/logout").finally(() => {
+    logoutUser();
+  });
+}
 
   function toggleDropdown() {
     setIsOpen(!isOpen);
