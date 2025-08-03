@@ -55,7 +55,7 @@ export default function SignInForm() {
         <div>
           <div className="flex justify-center mb-6">
             <Link to="/scan">
-              <QRIcon className="w-40 h-40 text-gray-700 dark:text-white cursor-pointer hover:scale-105 transition-transform duration-300" />
+              <QRIcon className="w-40 h-40 text-brand-500 dark:text-white cursor-pointer hover:scale-105 transition-transform duration-300" />
             </Link>
           </div>
 
