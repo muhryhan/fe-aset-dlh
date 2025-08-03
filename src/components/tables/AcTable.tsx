@@ -128,7 +128,6 @@ export default function AcTable() {
         `Rp ${d.harga_pembelian.toLocaleString("id-ID")}`,
     },
     { header: "Kondisi", accessor: (d: AcData) => d.kondisi },
-    { header: "Keterangan", accessor: (d: AcData) => d.keterangan },
   ];
 
   const exportHeaders = columns.map((col) => col.header);

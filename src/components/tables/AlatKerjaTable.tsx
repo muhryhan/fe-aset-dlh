@@ -127,7 +127,7 @@ export default function AlatKerjaTable() {
         `Rp ${d.harga_pembelian.toLocaleString("id-ID")}`,
     },
     { header: "Kondisi", accessor: (d: AlatKerjaData) => d.kondisi },
-    { header: "Keterangan", accessor: (d: AlatKerjaData) => d.keterangan },
+
   ];
 
   const exportHeaders = columns.map((col) => col.header);
