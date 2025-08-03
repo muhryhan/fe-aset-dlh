@@ -129,7 +129,7 @@ export default function SerberKendaraanForm({
           />
         </div>
       )}
-      <div className="space-y-6 w-full">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-6 w-full">
         <div>
           <Label htmlFor="no_polisi">Nomor Polisi</Label>
           <Input
@@ -147,7 +147,7 @@ export default function SerberKendaraanForm({
         {renderDatePicker("Oli Transmisi", "oli_transmisi")}
         {renderDatePicker("Ban", "ban")}
 
-        <div className="flex justify-end space-x-4 pt-6">
+        <div className="col-span-full flex justify-end space-x-4">
           <Button size="md" variant="warning" onClick={handleSubmit}>
             Update
           </Button>

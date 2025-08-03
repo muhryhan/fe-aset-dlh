@@ -52,6 +52,7 @@ export default function AlatKerjaFormInput({ initialData, onSuccess }: Props) {
     initialData,
     endpoint: "/api/alatkerja",
     requiredFields: [
+      "gambar",
       "merek",
       "no_registrasi",
       "no_serial",
@@ -76,7 +77,7 @@ export default function AlatKerjaFormInput({ initialData, onSuccess }: Props) {
 
   return (
     <ComponentCard title="Masukkan Data Alat Kerja">
-      <div className="space-y-6 w-full">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2 w-full">
         {alertMessage && (
           <div className="absolute top-4 left-1/2 transform -translate-x-1/2 w-1/2 z-99">
             <Alert
@@ -171,7 +172,7 @@ export default function AlatKerjaFormInput({ initialData, onSuccess }: Props) {
             onChange={handleInputChange}
           />
         </div>
-        <div className="flex justify-end space-x-4">
+        <div className="col-span-full flex justify-end space-x-4">
           <Button
             size="md"
             variant={isEdit ? "warning" : "primary"}

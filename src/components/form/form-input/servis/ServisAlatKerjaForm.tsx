@@ -56,7 +56,7 @@ export default function ServiceAlatKerjaForm({
   } = useForm<ServisData>({
     initialData,
     endpoint: "/api/servis",
-    requiredFields: ["tanggal", "nama_bengkel", "biaya_servis"],
+    requiredFields: ["tanggal", "nama_bengkel", "biaya_servis", "nota_pembayaran", "dokumentasi"],
     idKey: "id_servis",
     onSuccess,
     additionalPayload,
@@ -134,7 +134,7 @@ export default function ServiceAlatKerjaForm({
           />
         </div>
       )}
-      <div className="space-y-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2 w-full">
         <div>
           <Label htmlFor="no_unik">Nomor Registrasi</Label>
           <Input id="no_unik" value={formData.no_unik} disabled />
@@ -207,9 +207,11 @@ export default function ServiceAlatKerjaForm({
             ))}
           </div>
         </div>
-        <Button onClick={addEmptyCustomOnderdil} variant="primary">
-          Tambah Onderdil Lainnya
-        </Button>
+        <div className="col-span-full flex justify-start space-x-4">
+          <Button onClick={addEmptyCustomOnderdil} variant="primary">
+            Tambah Onderdil Lainnya
+          </Button>
+        </div>
         {onderdilList.map((item, index) => (
           <div
             key={index}
@@ -249,7 +251,7 @@ export default function ServiceAlatKerjaForm({
             </Button>
           </div>
         ))}
-        <div className="flex justify-end gap-4">
+        <div className="col-span-full flex justify-end space-x-4">
           <Button
             size="md"
             onClick={handleSubmit}

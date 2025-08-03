@@ -37,7 +37,7 @@ export default function TanamanFormInput({ initialData, onSuccess }: Props) {
   } = useForm<TanamanData>({
     initialData,
     endpoint: "/api/tanaman",
-    requiredFields: ["nama", "jenis", "stok", "keterangan"],
+    requiredFields: ["gambar", "nama", "jenis", "stok", "keterangan"],
     idKey: "id_tanaman",
     onSuccess,
     emptyTemplate: emptyTanaman,
