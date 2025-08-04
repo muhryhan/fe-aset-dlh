@@ -110,7 +110,7 @@ export default function SerberAlatBeratForm({
   );
 
   return (
-    <ComponentCard title="Form Servis Berkala Kendaraan">
+    <ComponentCard title="Form Servis Berkala Alat Berat">
       {alertMessage && (
         <div className="absolute top-4 left-1/2 transform -translate-x-1/2 w-1/2 z-50">
           <Alert

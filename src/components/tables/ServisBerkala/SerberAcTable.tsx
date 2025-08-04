@@ -108,7 +108,7 @@ export default function SerberAcTable() {
                       </TableCell>
                     ))}
                     <TableCell className="px-5 py-3 text-center text-theme-md font-medium text-gray-800 dark:text-gray-200">
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center justify-center gap-2">
                         {role && hakAkses(role, "serberAc", "update") && (
                         <EditButton
                           onClick={() => handleEdit(item.no_registrasi)}

@@ -92,7 +92,7 @@ export default function SerberKendaraanTable() {
                   <TableCell
                     key={text}
                     isHeader
-                    className="px-5 py-3 text-center font-bold text-gray-700 text-theme-md dark:text-gray-400"
+                    className="px-5 py-3 font-bold text-center text-theme-sm text-gray-700 dark:text-gray-400"
                   >
                     {text}
                   </TableCell>
@@ -123,7 +123,7 @@ export default function SerberKendaraanTable() {
                       </TableCell>
                     ))}
                     <TableCell className="px-5 py-3 text-center text-theme-md font-medium text-gray-800 dark:text-gray-200">
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center justify-center gap-2">
                         {role && hakAkses(role, "serberAc", "update") && (
                         <EditButton
                           onClick={() => handleEdit(item.no_polisi)}
