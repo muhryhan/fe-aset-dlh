@@ -156,7 +156,10 @@ export default function ServiceAlatKerjaTable() {
           <SearchInput value={search} onChange={setSearch} />
           <ExcelButton
             onClick={() =>
-              handleExportExcel(exportRows, `Data Servis ${no_registrasi ?? "Alat Kerja"}`)
+              handleExportExcel(
+                exportRows,
+                `Data Servis ${no_registrasi ?? "Alat Kerja"}`
+              )
             }
           />
           <PDFButton
@@ -302,19 +305,32 @@ export default function ServiceAlatKerjaTable() {
                                 className="px-5 py-3 text-theme-sm font-medium text-gray-600 dark:text-white"
                               >
                                 <div className="flex gap-2 justify-center">
-                                  <EditButton
-                                    onClick={() => {
-                                      setSelected(item);
-                                      setIsModalOpen(true);
-                                    }}
-                                  />
-                                  {item.id_servis != null && (
-                                    <DeleteButton
-                                      onClick={() =>
-                                        handleDelete(item.id_servis!)
-                                      }
-                                    />
-                                  )}
+                                  {role &&
+                                    hakAkses(
+                                      role,
+                                      "servisAlatKerja",
+                                      "update"
+                                    ) && (
+                                      <EditButton
+                                        onClick={() => {
+                                          setSelected(item);
+                                          setIsModalOpen(true);
+                                        }}
+                                      />
+                                    )}
+                                  {role &&
+                                    hakAkses(
+                                      role,
+                                      "servisAlatKerja",
+                                      "delete"
+                                    ) &&
+                                    item.id_servis != null && (
+                                      <DeleteButton
+                                        onClick={() =>
+                                          handleDelete(item.id_servis!)
+                                        }
+                                      />
+                                    )}
                                 </div>
                               </TableCell>
                             </>
@@ -366,21 +382,22 @@ export default function ServiceAlatKerjaTable() {
                         </TableCell>
                         <TableCell className={cellClass}>
                           <div className="flex gap-2 justify-center">
-                            {role && hakAkses(role, "servisAlatKerja", "update") && (
-                            <EditButton
-                              onClick={() => {
-                                setSelected(item);
-                                setIsModalOpen(true);
-                              }}
-                            />
-                            )}
+                            {role &&
+                              hakAkses(role, "servisAlatKerja", "update") && (
+                                <EditButton
+                                  onClick={() => {
+                                    setSelected(item);
+                                    setIsModalOpen(true);
+                                  }}
+                                />
+                              )}
                             {role &&
                               hakAkses(role, "servisAlatKerja", "delete") &&
-                            item.id_servis != null && (
-                              <DeleteButton
-                                onClick={() => handleDelete(item.id_servis!)}
-                              />
-                            )}
+                              item.id_servis != null && (
+                                <DeleteButton
+                                  onClick={() => handleDelete(item.id_servis!)}
+                                />
+                              )}
                           </div>
                         </TableCell>
                       </TableRow>

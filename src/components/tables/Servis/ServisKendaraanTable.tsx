@@ -304,19 +304,32 @@ export default function ServiceKendaraanTable() {
                                 className="px-5 py-3 text-theme-sm font-medium text-gray-600 dark:text-white"
                               >
                                 <div className="flex gap-2 justify-center">
-                                  <EditButton
-                                    onClick={() => {
-                                      setSelected(item);
-                                      setIsModalOpen(true);
-                                    }}
-                                  />
-                                  {item.id_servis != null && (
-                                    <DeleteButton
-                                      onClick={() =>
-                                        handleDelete(item.id_servis!)
-                                      }
-                                    />
-                                  )}
+                                  {role &&
+                                    hakAkses(
+                                      role,
+                                      "servisKendaraan",
+                                      "update"
+                                    ) && (
+                                      <EditButton
+                                        onClick={() => {
+                                          setSelected(item);
+                                          setIsModalOpen(true);
+                                        }}
+                                      />
+                                    )}
+                                  {role &&
+                                    hakAkses(
+                                      role,
+                                      "servisKendaraan",
+                                      "delete"
+                                    ) &&
+                                    item.id_servis != null && (
+                                      <DeleteButton
+                                        onClick={() =>
+                                          handleDelete(item.id_servis!)
+                                        }
+                                      />
+                                    )}
                                 </div>
                               </TableCell>
                             </>

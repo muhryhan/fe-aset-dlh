@@ -305,19 +305,24 @@ export default function ServiceAcTable() {
                                 className="px-5 py-3 text-theme-sm font-medium text-gray-600 dark:text-white"
                               >
                                 <div className="flex gap-2 justify-center">
-                                  <EditButton
-                                    onClick={() => {
-                                      setSelected(item);
-                                      setIsModalOpen(true);
-                                    }}
-                                  />
-                                  {item.id_servis != null && (
-                                    <DeleteButton
-                                      onClick={() =>
-                                        handleDelete(item.id_servis!)
-                                      }
-                                    />
-                                  )}
+                                  {role &&
+                                    hakAkses(role, "servisAc", "update") && (
+                                      <EditButton
+                                        onClick={() => {
+                                          setSelected(item);
+                                          setIsModalOpen(true);
+                                        }}
+                                      />
+                                    )}
+                                  {role &&
+                                    hakAkses(role, "servisAc", "delete") &&
+                                    item.id_servis != null && (
+                                      <DeleteButton
+                                        onClick={() =>
+                                          handleDelete(item.id_servis!)
+                                        }
+                                      />
+                                    )}
                                 </div>
                               </TableCell>
                             </>
