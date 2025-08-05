@@ -6,6 +6,8 @@ import { useFetch } from "../../../hooks/useFetch";
 import { handleExportExcel } from "../../../handler/handleExportExcel";
 import { handleExportPdf } from "../../../handler/handleExportPdf";
 import { formatDate } from "../../../utils/dateUtils";
+import { hakAkses } from "../../../utils/aclUtils";
+import { useAuthStore } from "../../../stores/authStore";
 
 import SearchInput from "../../ui/search/Search";
 import {
@@ -29,6 +31,7 @@ import TanamanMasukInput from "../../modals/dist-tanaman/TanamanMasukInput";
 import { TanamanMasukData } from "../../../types/tanamanMasuk";
 
 export default function TanamanMasukTable() {
+  const role = useAuthStore((s) => s.role);
   const { id_tanaman } = useParams<{ id_tanaman: string }>();
   const { data, setData, loading, fetchData } = useFetch<TanamanMasukData>(
     `/api/tanamanmasuk/tanaman/${id_tanaman}`
@@ -93,7 +96,10 @@ export default function TanamanMasukTable() {
           <SearchInput value={search} onChange={setSearch} />
           <ExcelButton
             onClick={() =>
-              handleExportExcel(exportRows, `Data Aset ${id_tanaman ?? "Tanaman Masuk"}`)
+              handleExportExcel(
+                exportRows,
+                `Data Aset ${id_tanaman ?? "Tanaman Masuk"}`
+              )
             }
           />
           <PDFButton
@@ -172,19 +178,23 @@ export default function TanamanMasukTable() {
                       ))}
                       <TableCell className="px-5 py-3 text-center text-theme-sm font-medium text-gray-600 dark:text-gray-400">
                         <div className="flex gap-2 justify-center">
-                          <EditButton
-                            onClick={() => {
-                              setSelected(item);
-                              setIsModalOpen(true);
-                            }}
-                          />
-                          {item.id_tanamanmasuk != null && (
-                            <DeleteButton
-                              onClick={() =>
-                                handleDelete(item.id_tanamanmasuk!)
-                              }
+                          {role && hakAkses(role, "tanamanMasuk", "update") && (
+                            <EditButton
+                              onClick={() => {
+                                setSelected(item);
+                                setIsModalOpen(true);
+                              }}
                             />
                           )}
+                          {role &&
+                            hakAkses(role, "tanamanMasuk", "delete") &&
+                            item.id_tanamanmasuk != null && (
+                              <DeleteButton
+                                onClick={() =>
+                                  handleDelete(item.id_tanamanmasuk!)
+                                }
+                              />
+                            )}
                         </div>
                       </TableCell>
                     </TableRow>

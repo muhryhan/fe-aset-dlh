@@ -6,6 +6,8 @@ import { useFetch } from "../../../hooks/useFetch";
 import { handleExportExcel } from "../../../handler/handleExportExcel";
 import { handleExportPdf } from "../../../handler/handleExportPdf";
 import { formatDate } from "../../../utils/dateUtils";
+import { hakAkses } from "../../../utils/aclUtils";
+import { useAuthStore } from "../../../stores/authStore";
 
 import SearchInput from "../../ui/search/Search";
 import {
@@ -29,9 +31,11 @@ import TanamanKeluarInput from "../../modals/dist-tanaman/TanamanKeluarInput";
 import { TanamanKeluarData } from "../../../types/tanamanKeluar";
 
 export default function TanamanKeluarTable() {
+  const role = useAuthStore((s) => s.role);
   const { id_tanaman } = useParams<{ id_tanaman: string }>();
-  const { data, setData, loading, fetchData } =
-    useFetch<TanamanKeluarData>(`/api/tanamankeluar/tanaman/${id_tanaman}`);
+  const { data, setData, loading, fetchData } = useFetch<TanamanKeluarData>(
+    `/api/tanamankeluar/tanaman/${id_tanaman}`
+  );
 
   const { search, setSearch, filtered } = useSearch(data, (item, query) =>
     item.keterangan.toString().includes(query)
@@ -92,7 +96,10 @@ export default function TanamanKeluarTable() {
           <SearchInput value={search} onChange={setSearch} />
           <ExcelButton
             onClick={() =>
-              handleExportExcel(exportRows, `Data Aset ${id_tanaman ?? "Tanaman Keluar"}`)
+              handleExportExcel(
+                exportRows,
+                `Data Aset ${id_tanaman ?? "Tanaman Keluar"}`
+              )
             }
           />
           <PDFButton
@@ -171,19 +178,24 @@ export default function TanamanKeluarTable() {
                       ))}
                       <TableCell className="px-5 py-3 text-center text-theme-sm font-medium text-gray-600 dark:text-gray-400">
                         <div className="flex gap-2 justify-center">
-                          <EditButton
-                            onClick={() => {
-                              setSelected(item);
-                              setIsModalOpen(true);
-                            }}
-                          />
-                          {item.id_tanamankeluar != null && (
-                            <DeleteButton
-                              onClick={() =>
-                                handleDelete(item.id_tanamankeluar!)
-                              }
-                            />
-                          )}
+                          {role &&
+                            hakAkses(role, "tanamanKeluar", "update") && (
+                              <EditButton
+                                onClick={() => {
+                                  setSelected(item);
+                                  setIsModalOpen(true);
+                                }}
+                              />
+                            )}
+                          {role &&
+                            hakAkses(role, "tanamanKeluar", "delete") &&
+                            item.id_tanamankeluar != null && (
+                              <DeleteButton
+                                onClick={() =>
+                                  handleDelete(item.id_tanamankeluar!)
+                                }
+                              />
+                            )}
                         </div>
                       </TableCell>
                     </TableRow>
