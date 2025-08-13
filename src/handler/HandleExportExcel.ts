@@ -1,7 +1,3 @@
-// import ExcelJS from "exceljs";
-// import { saveAs } from "file-saver";
-// import logo from "../icons/logo-kota-palu.png";
-
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 

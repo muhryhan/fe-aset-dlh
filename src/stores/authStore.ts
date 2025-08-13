@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-type Role = "superadmin" | "admin";
+type Role = "kepalaDinas" | "bendahara" | "admin";
 
 type AuthState = {
   isLoggedIn: boolean;
