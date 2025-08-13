@@ -1,38 +1,32 @@
+type Permission = "create" | "read" | "update" | "delete";
+
+const RESOURCES = [
+  "kendaraan",
+  "alatBerat",
+  "alatKerja",
+  "ac",
+  "tanah",
+  "tanaman",
+  "tanamanMasuk",
+  "tanamanKeluar",
+  "servisAc",
+  "servisKendaraan",
+  "servisAlatBerat",
+  "servisAlatKerja",
+  "serberAc",
+  "serberKendaraan",
+  "serberAlatBerat",
+  "serberAlatKerja",
+] as const;
+
+const FULL_ACCESS: Permission[] = ["create", "read", "update", "delete"];
+const LIMITED_ACCESS: Permission[] = ["create", "read"];
+
+const createAccessMap = (permissions: Permission[]) =>
+  Object.fromEntries(RESOURCES.map((res) => [res, permissions]));
+
 export const ACL = {
-  superadmin: {
-    kendaraan: ["create", "read", "update", "delete"],
-    alatBerat: ["create", "read", "update", "delete"],
-    alatKerja: ["create", "read", "update", "delete"],
-    ac: ["create", "read", "update", "delete"],
-    tanah: ["create", "read", "update", "delete"],
-    tanaman: ["create", "read", "update", "delete"],
-    tanamanMasuk: ["create", "read", "update", "delete"],
-    tanamanKeluar: ["create", "read", "update", "delete"],
-    servisAc: ["create", "read", "update", "delete"],
-    servisKendaraan: ["create", "read", "update", "delete"],
-    servisAlatBerat: ["create", "read", "update", "delete"],
-    servisAlatKerja: ["create", "read", "update", "delete"],
-    serberAc: ["create", "read", "update", "delete"],
-    serberKendaraan: ["create", "read", "update", "delete"],
-    serberAlatBerat: ["create", "read", "update", "delete"],
-    serberAlatKera: ["create", "read", "update", "delete"],
-  },
-  admin: {
-    kendaraan: ["create", "read"],
-    alatBerat: ["create", "read"],
-    alatKerja: ["create", "read"],
-    ac: ["create", "read"],
-    tanah: ["create", "read"],
-    tanaman: ["create", "read"],
-    tanamanMasuk: ["create", "read"],
-    tanamanKeluar: ["create", "read"],
-    servisAc: ["create", "read"],
-    servisKendaraan: ["create", "read"],
-    servisAlatBerat: ["create", "read"],
-    servisAlatKerja: ["create", "read"],
-    serberAc: ["create", "read"],
-    serberKendaraan: ["create", "read"],
-    serberAlatBerat: ["create", "read"],
-    serberAlatKerja: ["create", "read"],
-  },
+  kepalaDinas: createAccessMap(FULL_ACCESS),
+  bendahara: createAccessMap(FULL_ACCESS),
+  admin: createAccessMap(LIMITED_ACCESS),
 };
