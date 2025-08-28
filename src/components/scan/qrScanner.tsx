@@ -125,18 +125,33 @@ const QrScanner = () => {
     tanggal ? new Date(tanggal).toLocaleDateString("id-ID") : "-";
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white p-6 space-y-6">
+    <div className="flex flex-col items-center justify-center p-4 sm:p-6 space-y-6 w-full">
       {!result && (
         <>
+          {/* Tombol Scan Kamera */}
           <button
             onClick={startCameraScan}
-            className="bg-white text-black px-6 py-3 rounded hover:bg-gray-300 transition"
+            className="w-full sm:max-w-sm flex items-center justify-center gap-3 
+                     bg-gradient-to-r from-brand-500 to-brand-900 
+                     text-white font-semibold 
+                     px-4 sm:px-6 py-3 sm:py-4 rounded-2xl shadow-lg 
+                     hover:scale-105 hover:shadow-2xl hover:brightness-110 
+                     transition-all duration-300 text-base sm:text-lg"
           >
-            📷 Scan dari Kamera
+            <span className="text-xl sm:text-2xl">📷</span> Scan dari Kamera
           </button>
 
-          <label className="bg-white text-black px-6 py-3 rounded cursor-pointer hover:bg-gray-300 transition">
-            📁 Upload Gambar QR Code
+          {/* Tombol Upload Gambar */}
+          <label
+            className="w-full sm:max-w-sm flex items-center justify-center gap-3 
+                     bg-gradient-to-r from-green-900 to-green-500 
+                     text-white font-semibold 
+                     px-4 sm:px-6 py-3 sm:py-4 rounded-2xl shadow-lg cursor-pointer 
+                     hover:scale-105 hover:shadow-2xl hover:brightness-110 
+                     transition-all duration-300 text-base sm:text-lg"
+          >
+            <span className="text-xl sm:text-2xl">📁</span> Upload Gambar QR
+            Code
             <input
               type="file"
               accept="image/*"
@@ -145,89 +160,117 @@ const QrScanner = () => {
             />
           </label>
 
+          {/* Kamera aktif */}
           {scanning && (
             <video
               ref={videoRef}
-              className="w-full max-w-sm rounded shadow"
+              className="w-full sm:max-w-sm rounded-2xl shadow-xl border-2 
+                       border-indigo-300 dark:border-gray-600"
               autoPlay
               muted
               playsInline
             />
           )}
-
-          {!scanning && (
-            <p className="text-gray-400 text-center">
-              📷 Gunakan kamera atau upload gambar QR Code untuk memulai
-            </p>
-          )}
         </>
       )}
 
+      {/* Hasil Scan */}
       {result && (
-        <div className="text-center space-y-4">
-          <p className="text-green-400 font-semibold text-lg">
-            Nomor Aset: {result}
+        <div className="text-center space-y-6 w-full">
+          {/* Nomor Aset */}
+          <p
+            className="text-green-800 dark:text-green-500 font-bold 
+                     text-xl sm:text-2xl tracking-wide"
+          >
+            Nomor Aset:{" "}
+            <span className="text-gray-900 dark:text-white break-words">
+              {result}
+            </span>
           </p>
 
+          {/* Loading & Error */}
           {loading && (
-            <p className="text-yellow-400">⏳ Memuat data servis...</p>
+            <p className="text-white animate-pulse font-medium text-base sm:text-lg">
+              ⏳ Memuat data servis...
+            </p>
           )}
-          {error && <p className="text-red-400">{error}</p>}
+          {error && (
+            <p className="text-red-500 font-semibold text-sm sm:text-base">
+              {error}
+            </p>
+          )}
 
+          {/* Data Service */}
           {!loading && !error && dataSerber && (
-            <div className="bg-gray-800 p-4 rounded shadow-md w-full max-w-md text-sm text-left space-y-1">
+            <div
+              className="bg-white dark:bg-gray-800 p-4 sm:p-6 rounded-2xl shadow-lg 
+                       w-full max-w-md text-sm sm:text-lg 
+                       text-gray-800 dark:text-gray-200 
+                       space-y-3 border border-gray-200 dark:border-gray-700 
+                       mx-auto"
+            >
               {dataSerber.no_polisi && (
-                <p>
-                  <strong>No Polisi:</strong> {dataSerber.no_polisi}
-                </p>
+                <div className="flex flex-col sm:flex-row sm:justify-between gap-1 sm:gap-0 px-2 sm:px-10">
+                  <span className="font-semibold">No Polisi:</span>
+                  <span>{dataSerber.no_polisi}</span>
+                </div>
               )}
               {dataSerber.no_registrasi && (
-                <p>
-                  <strong>No Registrasi:</strong> {dataSerber.no_registrasi}
-                </p>
+                <div className="flex flex-col sm:flex-row sm:justify-between gap-1 sm:gap-0 px-2 sm:px-10">
+                  <span className="font-semibold">No Registrasi:</span>
+                  <span>{dataSerber.no_registrasi}</span>
+                </div>
               )}
               {dataSerber.oli_mesin && (
-                <p>
-                  <strong>Oli Mesin:</strong>{" "}
-                  {renderTanggal(dataSerber.oli_mesin)}
-                </p>
+                <div className="flex flex-col sm:flex-row sm:justify-between gap-1 sm:gap-0 px-2 sm:px-10">
+                  <span className="font-semibold">Oli Mesin:</span>
+                  <span>{renderTanggal(dataSerber.oli_mesin)}</span>
+                </div>
               )}
               {dataSerber.filter_oli_mesin && (
-                <p>
-                  <strong>Filter Oli Mesin:</strong>{" "}
-                  {renderTanggal(dataSerber.filter_oli_mesin)}
-                </p>
+                <div className="flex flex-col sm:flex-row sm:justify-between gap-1 sm:gap-0 px-2 sm:px-10">
+                  <span className="font-semibold">Filter Oli Mesin:</span>
+                  <span>{renderTanggal(dataSerber.filter_oli_mesin)}</span>
+                </div>
               )}
               {dataSerber.oli_gardan && (
-                <p>
-                  <strong>Oli Gardan:</strong>{" "}
-                  {renderTanggal(dataSerber.oli_gardan)}
-                </p>
+                <div className="flex flex-col sm:flex-row sm:justify-between gap-1 sm:gap-0 px-2 sm:px-10">
+                  <span className="font-semibold">Oli Gardan:</span>
+                  <span>{renderTanggal(dataSerber.oli_gardan)}</span>
+                </div>
               )}
               {dataSerber.oli_transmisi && (
-                <p>
-                  <strong>Oli Transmisi:</strong>{" "}
-                  {renderTanggal(dataSerber.oli_transmisi)}
-                </p>
+                <div className="flex flex-col sm:flex-row sm:justify-between gap-1 sm:gap-0 px-2 sm:px-10">
+                  <span className="font-semibold">Oli Transmisi:</span>
+                  <span>{renderTanggal(dataSerber.oli_transmisi)}</span>
+                </div>
               )}
               {dataSerber.ban && (
-                <p>
-                  <strong>Ban:</strong> {renderTanggal(dataSerber.ban)}
-                </p>
+                <div className="flex flex-col sm:flex-row sm:justify-between gap-1 sm:gap-0 px-2 sm:px-10">
+                  <span className="font-semibold">Ban:</span>
+                  <span>{renderTanggal(dataSerber.ban)}</span>
+                </div>
               )}
               {dataSerber.cuci && (
-                <p>
-                  <strong>Cuci AC:</strong> {renderTanggal(dataSerber.cuci)}
-                </p>
+                <div className="flex flex-col sm:flex-row sm:justify-between gap-1 sm:gap-0 px-2 sm:px-10">
+                  <span className="font-semibold">Cuci AC:</span>
+                  <span>{renderTanggal(dataSerber.cuci)}</span>
+                </div>
               )}
             </div>
           )}
 
+          {/* Tombol Reset */}
           <button
             onClick={resetScanner}
-            className="mt-3 bg-white text-black px-4 py-2 rounded hover:bg-gray-200 transition"
+            className="mt-4 w-full sm:max-w-md flex items-center justify-center gap-2
+                     bg-gradient-to-r from-brand-500 to-brand-900 
+                     text-white font-semibold 
+                     px-4 sm:px-6 py-3 sm:py-4 rounded-2xl shadow-lg 
+                     hover:scale-105 hover:shadow-2xl hover:brightness-110
+                     transition-all duration-300 text-base sm:text-lg"
           >
-            Scan Lagi
+            🔄 Scan Lagi
           </button>
         </div>
       )}

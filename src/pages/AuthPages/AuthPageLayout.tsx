@@ -1,6 +1,5 @@
 import React from "react";
 import GridShape from "../../components/common/GridShape";
-import { Link } from "react-router-dom";
 import ThemeTogglerTwo from "../../components/common/ThemeTogglerTwo";
 
 export default function AuthLayout({
@@ -16,15 +15,19 @@ export default function AuthLayout({
           <div className="relative flex items-center justify-center z-1">
             {/* <!-- ===== Common Grid Shape Start ===== --> */}
             <GridShape />
-            <div className="flex flex-col items-center max-w-xs">
-              <Link to="/" className="block mb-4">
-                <img
-                  width={400}
-                  height={80}
-                  src="/images/logo/logo-auth-dlh.svg"
-                  alt="Logo"
-                />
-              </Link>
+            <div className="flex flex-row items-center justify-center gap-4 max-w-xs">
+              <img
+                width={60}
+                height={20}
+                src="/src/icons/logo-kota-palu.png"
+                alt="Logo"
+              />
+              <img
+                width={135}
+                height={135}
+                src="/src/icons/klhk.png"
+                alt="Logo"
+              />
             </div>
           </div>
         </div>
