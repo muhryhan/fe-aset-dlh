@@ -96,7 +96,7 @@ const QrScanner = () => {
     setResult(null);
     setError(null);
     setDataSerber(null);
-    stopCamera();
+    setScanning(false);
   };
 
   const handleFileUpload = async (

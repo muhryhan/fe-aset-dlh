@@ -3,15 +3,21 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import { EventInput, DateSelectArg, EventClickArg } from "@fullcalendar/core";
+import {
+  EventInput,
+  DateSelectArg,
+  EventClickArg,
+  EventContentArg,
+} from "@fullcalendar/core";
 import { Modal } from "../components/ui/modal";
 import { useModal } from "../hooks/useModal";
 import PageMeta from "../components/common/PageMeta";
 
+interface CalendarExtendedProps {
+  calendar: string;
+}
 interface CalendarEvent extends EventInput {
-  extendedProps: {
-    calendar: string;
-  };
+  extendedProps: CalendarExtendedProps;
 }
 
 const Calendar: React.FC = () => {
@@ -34,26 +40,12 @@ const Calendar: React.FC = () => {
   };
 
   useEffect(() => {
-    // Initialize with some events
     setEvents([
       {
         id: "1",
-        title: "Event Conf.",
+        title: "Servis berkala aset DN 1111 DN",
         start: new Date().toISOString().split("T")[0],
-        extendedProps: { calendar: "Danger" },
-      },
-      {
-        id: "2",
-        title: "Meeting",
-        start: new Date(Date.now() + 86400000).toISOString().split("T")[0],
-        extendedProps: { calendar: "Success" },
-      },
-      {
-        id: "3",
-        title: "Workshop",
-        start: new Date(Date.now() + 172800000).toISOString().split("T")[0],
-        end: new Date(Date.now() + 259200000).toISOString().split("T")[0],
-        extendedProps: { calendar: "Primary" },
+        extendedProps: { calendar: "Warning" },
       },
     ]);
   }, []);
@@ -71,13 +63,12 @@ const Calendar: React.FC = () => {
     setEventTitle(event.title);
     setEventStartDate(event.start?.toISOString().split("T")[0] || "");
     setEventEndDate(event.end?.toISOString().split("T")[0] || "");
-    setEventLevel(event.extendedProps.calendar);
+    setEventLevel((event.extendedProps as CalendarExtendedProps).calendar);
     openModal();
   };
 
   const handleAddOrUpdateEvent = () => {
     if (selectedEvent) {
-      // Update existing event
       setEvents((prevEvents) =>
         prevEvents.map((event) =>
           event.id === selectedEvent.id
@@ -153,7 +144,7 @@ const Calendar: React.FC = () => {
           <div className="flex flex-col px-2 overflow-y-auto custom-scrollbar">
             <div>
               <h5 className="mb-2 font-semibold text-gray-800 modal-title text-theme-xl dark:text-white/90 lg:text-2xl">
-                {selectedEvent ? "Edit Event" : "Add Event"}
+                {selectedEvent ? "Edit Event" : "Add Event or Task"}
               </h5>
               <p className="text-sm text-gray-500 dark:text-gray-400">
                 Plan your next big moment: schedule or edit an event to stay on
@@ -164,7 +155,7 @@ const Calendar: React.FC = () => {
               <div>
                 <div>
                   <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
-                    Event Title
+                    Title
                   </label>
                   <input
                     id="event-title"
@@ -177,7 +168,7 @@ const Calendar: React.FC = () => {
               </div>
               <div className="mt-6">
                 <label className="block mb-4 text-sm font-medium text-gray-700 dark:text-gray-400">
-                  Event Color
+                  Color
                 </label>
                 <div className="flex flex-wrap items-center gap-4 sm:gap-5">
                   {Object.entries(calendarsEvents).map(([key, value]) => (
@@ -254,7 +245,7 @@ const Calendar: React.FC = () => {
                 type="button"
                 className="btn btn-success btn-update-event flex w-full justify-center rounded-lg bg-brand-500 px-4 py-2.5 text-sm font-medium text-white hover:bg-brand-600 sm:w-auto"
               >
-                {selectedEvent ? "Update Changes" : "Add Event"}
+                {selectedEvent ? "Update Changes" : "Add"}
               </button>
             </div>
           </div>
@@ -264,8 +255,9 @@ const Calendar: React.FC = () => {
   );
 };
 
-const renderEventContent = (eventInfo: any) => {
-  const colorClass = `fc-bg-${eventInfo.event.extendedProps.calendar.toLowerCase()}`;
+const renderEventContent = (eventInfo: EventContentArg) => {
+  const { calendar } = eventInfo.event.extendedProps as CalendarExtendedProps;
+  const colorClass = `fc-bg-${calendar.toLowerCase()}`;
   return (
     <div
       className={`event-fc-color flex fc-event-main ${colorClass} p-1 rounded`}

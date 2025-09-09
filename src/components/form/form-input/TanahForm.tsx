@@ -27,6 +27,7 @@ const catBarang = [
     value: "Tanah Bangunan Laboratorium",
   },
   { label: "Tanah Kosong", value: "Tanah Kosong" },
+  { label: "Tanah TPA", value: "Tanah TPA" },
 ];
 
 const status = [

@@ -101,7 +101,10 @@ export default function TanahTable() {
     { header: "Nama Barang", accessor: (d: TanahData) => d.nama_barang },
     { header: "Peruntukan", accessor: (d: TanahData) => d.peruntukan },
     { header: "Alamat", accessor: (d: TanahData) => d.alamat },
-    { header: "Luas (m²)", accessor: (d: TanahData) => d.luas },
+    {
+      header: "Luas (m²)",
+      accessor: (d: TanahData) => d.luas.toLocaleString("id-ID"),
+    },
     {
       header: "Tahun Pengadaan",
       accessor: (d: TanahData) => d.tahun_pengadaan,
