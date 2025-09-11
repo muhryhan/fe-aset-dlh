@@ -14,6 +14,7 @@ import AlatKerja from "./pages/AlatKerja";
 import Ac from "./pages/Ac";
 import Tanaman from "./pages/Tanaman";
 import Tanah from "./pages/Tanah";
+import DetailTanah from "./pages/DetTanah/DetailTanah";
 import DistribusiTanaman from "./pages/DistTanaman/DistribusiTanaman";
 import ServiceKendaraan from "./pages/Servis/ServisKendaraan";
 import ServiceAlatBerat from "./pages/Servis/ServisAlatBerat";
@@ -54,6 +55,9 @@ export default function App() {
           <Route path="/ac" element={<Ac />} />
           <Route path="/tanaman" element={<Tanaman />} />
           <Route path="/tanah" element={<Tanah />} />
+
+          {/* Detail Pages */}
+          <Route path="/detail-tanah/:id_tanah" element={<DetailTanah />} />
 
           {/* Service Pages */}
           <Route

@@ -35,6 +35,7 @@ export default function AlatBeratFormInput({ initialData, onSuccess }: Props) {
     id_alatberat: 0,
     qrcode: "",
     gambar: "",
+    kode_barang: "",
     merek: "",
     no_registrasi: "",
     no_mesin: "",
@@ -61,6 +62,7 @@ export default function AlatBeratFormInput({ initialData, onSuccess }: Props) {
     endpoint: "/api/alatberat",
     requiredFields: [
       "gambar",
+      "kode_barang",
       "merek",
       "no_registrasi",
       "no_mesin",
@@ -108,6 +110,14 @@ export default function AlatBeratFormInput({ initialData, onSuccess }: Props) {
             id_file="gambar"
             onChange={handleFileChange}
             className="w-full"
+          />
+        </div>
+        <div>
+          <Label htmlFor="kode_barang">Kode Barang</Label>
+          <Input
+            id="kode_barang"
+            value={formData.kode_barang}
+            onChange={handleInputChange}
           />
         </div>
         <div>

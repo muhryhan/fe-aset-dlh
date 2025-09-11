@@ -20,6 +20,7 @@ export default function TanamanFormInput({ initialData, onSuccess }: Props) {
   const emptyTanaman: TanamanData = {
     id_tanaman: 0,
     gambar: "",
+    kode_barang: "",
     nama: "",
     jenis: "",
     stok: 0,
@@ -37,7 +38,14 @@ export default function TanamanFormInput({ initialData, onSuccess }: Props) {
   } = useForm<TanamanData>({
     initialData,
     endpoint: "/api/tanaman",
-    requiredFields: ["gambar", "nama", "jenis", "stok", "keterangan"],
+    requiredFields: [
+      "gambar",
+      "kode_barang",
+      "nama",
+      "jenis",
+      "stok",
+      "keterangan",
+    ],
     idKey: "id_tanaman",
     onSuccess,
     emptyTemplate: emptyTanaman,
@@ -69,6 +77,14 @@ export default function TanamanFormInput({ initialData, onSuccess }: Props) {
             id_file="gambar"
             onChange={handleFileChange}
             className="w-full"
+          />
+        </div>
+        <div>
+          <Label htmlFor="kode_barang">Kode Barang</Label>
+          <Input
+            id="kode_barang"
+            value={formData.kode_barang}
+            onChange={handleInputChange}
           />
         </div>
         <div>

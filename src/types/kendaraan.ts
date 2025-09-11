@@ -2,6 +2,7 @@
     id_kendaraan: number;
     qrcode: string;
     gambar: string;
+    kode_barang: string;
     merek: string;
     no_polisi: string;
     no_mesin: string;

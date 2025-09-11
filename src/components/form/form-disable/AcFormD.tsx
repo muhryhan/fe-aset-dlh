@@ -28,6 +28,8 @@ const FormDisableAc: React.FC = () => {
   return (
     <div className="w-full mx-auto p-6 bg-white rounded shadow dark:bg-white/[0.03]">
       <form className="flex flex-col gap-6 w-full text-theme-xs font-medium text-gray-600 dark:text-gray-300">
+        <InputField label="Kode Barang" value={ac.kode_barang} />
+        <InputField label="Nama Barang" value={ac.nama_barang} />
         <InputField label="Merek" value={ac.merek} />
         <InputField label="Nomor Registrasi" value={ac.no_registrasi} />
         <InputField label="Nomor Serial" value={ac.no_serial} />

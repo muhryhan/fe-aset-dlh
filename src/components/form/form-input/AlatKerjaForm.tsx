@@ -30,6 +30,8 @@ export default function AlatKerjaFormInput({ initialData, onSuccess }: Props) {
     id_alatkerja: 0,
     qrcode: "",
     gambar: "",
+    kode_barang: "",
+    nama_barang: "",
     merek: "",
     no_registrasi: "",
     no_serial: "",
@@ -37,6 +39,7 @@ export default function AlatKerjaFormInput({ initialData, onSuccess }: Props) {
     tahun_pembelian: 0,
     harga_pembelian: 0,
     kondisi: "",
+    pemegang: "",
     keterangan: "",
   };
 
@@ -53,6 +56,8 @@ export default function AlatKerjaFormInput({ initialData, onSuccess }: Props) {
     endpoint: "/api/alatkerja",
     requiredFields: [
       "gambar",
+      "kode_barang",
+      "nama_barang",
       "merek",
       "no_registrasi",
       "no_serial",
@@ -60,6 +65,7 @@ export default function AlatKerjaFormInput({ initialData, onSuccess }: Props) {
       "tahun_pembelian",
       "harga_pembelian",
       "kondisi",
+      "pemegang",
       "keterangan",
     ],
     idKey: "id_alatkerja",
@@ -96,6 +102,22 @@ export default function AlatKerjaFormInput({ initialData, onSuccess }: Props) {
             id_file="gambar"
             onChange={handleFileChange}
             className="w-full"
+          />
+        </div>
+        <div>
+          <Label htmlFor="kode_barang">Kode Barang</Label>
+          <Input
+            id="kode_barang"
+            value={formData.kode_barang}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div>
+          <Label htmlFor="nama_barang">Nama Barang</Label>
+          <Input
+            id="nama_barang"
+            value={formData.nama_barang}
+            onChange={handleInputChange}
           />
         </div>
         <div>
@@ -162,6 +184,14 @@ export default function AlatKerjaFormInput({ initialData, onSuccess }: Props) {
             options={kondisi}
             placeholder="Kondisi alat kerja"
             onChange={(value) => handleSelectChange("kondisi", value)}
+          />
+        </div>
+        <div>
+          <Label htmlFor="pemegang">Pemegang</Label>
+          <Input
+            id="pemegang"
+            value={formData.pemegang}
+            onChange={handleInputChange}
           />
         </div>
         <div>

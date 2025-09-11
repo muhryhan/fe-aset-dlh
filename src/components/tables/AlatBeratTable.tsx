@@ -41,9 +41,11 @@ export default function AlatBeratTable() {
   const { search, setSearch, filtered } = useSearch(
     data,
     (item, query) =>
+      item.kode_barang.toLowerCase().includes(query) ||
       item.merek.toLowerCase().includes(query) ||
       item.no_registrasi.toLowerCase().includes(query) ||
       item.warna.toLowerCase().includes(query) ||
+      item.kategori.toLowerCase().includes(query) ||
       item.penggunaan.toLowerCase().includes(query) ||
       item.kondisi.toLowerCase().includes(query) ||
       item.kategori.toLowerCase().includes(query) ||
@@ -114,11 +116,39 @@ export default function AlatBeratTable() {
         </a>
       ),
     },
+    { header: "Kode Barang", accessor: (d: AlatBeratData) => d.kode_barang },
     { header: "Merek", accessor: (d: AlatBeratData) => d.merek },
     {
       header: "No. Registrasi",
       accessor: (d: AlatBeratData) => d.no_registrasi,
     },
+    {
+      header: "Harga Pembelian",
+      accessor: (d: AlatBeratData) =>
+        `Rp ${d.harga_pembelian.toLocaleString("id-ID")}`,
+    },
+    {
+      header: "Tahun Pembuatan",
+      accessor: (d: AlatBeratData) => d.tahun_pembuatan,
+    },
+    { header: "Kategori", accessor: (d: AlatBeratData) => d.kategori },
+    {
+      header: "Pajak",
+      accessor: (d: AlatBeratData) => formatDate(d.pajak),
+    },
+    { header: "Penggunaan", accessor: (d: AlatBeratData) => d.penggunaan },
+    { header: "Kondisi", accessor: (d: AlatBeratData) => d.kondisi },
+  ];
+
+  const exportColumns = [
+    { header: "Kode Barang", accessor: (d: AlatBeratData) => d.kode_barang },
+    { header: "Merek", accessor: (d: AlatBeratData) => d.merek },
+    {
+      header: "No. Registrasi",
+      accessor: (d: AlatBeratData) => d.no_registrasi,
+    },
+    { header: "No. Mesin", accessor: (d: AlatBeratData) => d.no_mesin },
+    { header: "No. Rangka", accessor: (d: AlatBeratData) => d.no_rangka },
     { header: "Warna", accessor: (d: AlatBeratData) => d.warna },
     {
       header: "Harga Pembelian",
@@ -138,9 +168,9 @@ export default function AlatBeratTable() {
     { header: "Kondisi", accessor: (d: AlatBeratData) => d.kondisi },
   ];
 
-  const exportHeaders = columns.map((col) => col.header);
-  const exportRows = filtered.map((row) =>
-    columns.map((col) => col.accessor(row))
+  const exportHeaders = exportColumns.map((col) => col.header);
+  const exportRows = (search ? filtered : data).map((row) =>
+    exportColumns.map((col) => col.accessor(row))
   );
 
   return (
@@ -159,6 +189,7 @@ export default function AlatBeratTable() {
           <ExcelButton
             onClick={() =>
               handleExportExcel(
+                exportHeaders,
                 exportRows,
                 `Data Aset ${no_registrasi ?? "Alat Berat"}`
               )

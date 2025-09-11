@@ -29,6 +29,7 @@ const FormDisableAlatBerat: React.FC = () => {
   return (
     <div className="w-full mx-auto p-6 bg-white rounded shadow dark:bg-white/[0.03]">
       <form className="flex flex-col gap-6 w-full text-theme-xs font-medium text-gray-600 dark:text-gray-300">
+        <InputField label="Kode Barang" value={alatberat.kode_barang} />
         <InputField label="Merek" value={alatberat.merek} />
         <InputField label="Nomor Registrasi" value={alatberat.no_registrasi} />
         <InputField label="Nomor Mesin" value={alatberat.no_mesin} />

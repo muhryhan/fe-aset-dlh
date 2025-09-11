@@ -30,6 +30,8 @@ export default function AcInput({ initialData, onSuccess }: Props) {
     id_ac: 0,
     qrcode: "",
     gambar: "",
+    kode_barang: "",
+    nama_barang: "",
     merek: "",
     no_registrasi: "",
     no_serial: "",
@@ -55,6 +57,8 @@ export default function AcInput({ initialData, onSuccess }: Props) {
     endpoint: "/api/ac",
     requiredFields: [
       "gambar",
+      "kode_barang",
+      "nama_barang",
       "merek",
       "no_registrasi",
       "no_serial",
@@ -100,6 +104,22 @@ export default function AcInput({ initialData, onSuccess }: Props) {
             id_file="gambar"
             onChange={handleFileChange}
             className="w-full"
+          />
+        </div>
+        <div>
+          <Label htmlFor="kode_barang">Kode Barang</Label>
+          <Input
+            id="kode_barang"
+            value={formData.kode_barang}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div>
+          <Label htmlFor="nama_barang">Nama Barang</Label>
+          <Input
+            id="nama_barang"
+            value={formData.nama_barang}
+            onChange={handleInputChange}
           />
         </div>
         <div>

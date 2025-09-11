@@ -2,6 +2,8 @@ export interface AcData {
   id_ac: number;
   qrcode: string;
   gambar: string;
+  kode_barang: string;
+  nama_barang: string;
   merek: string;
   no_registrasi: string;
   no_serial: string;

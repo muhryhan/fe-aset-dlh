@@ -40,9 +40,13 @@ export default function AlatKerjaTable() {
   const { search, setSearch, filtered } = useSearch(
     data,
     (item, query) =>
+      item.kode_barang.toLowerCase().includes(query) ||
+      item.nama_barang.toLowerCase().includes(query) ||
       item.merek.toLowerCase().includes(query) ||
       item.no_registrasi.toLowerCase().includes(query) ||
+      item.no_serial.toLowerCase().includes(query) ||
       item.kondisi.toLowerCase().includes(query) ||
+      item.pemegang.toLowerCase().includes(query) ||
       item.tahun_pembelian.toString().includes(query)
   );
 
@@ -110,6 +114,30 @@ export default function AlatKerjaTable() {
         </a>
       ),
     },
+    { header: "Kode Barang", accessor: (d: AlatKerjaData) => d.kode_barang },
+    { header: "Merek", accessor: (d: AlatKerjaData) => d.merek },
+    {
+      header: "No. Registrasi",
+      accessor: (d: AlatKerjaData) => d.no_registrasi,
+    },
+    { header: "No. Serial", accessor: (d: AlatKerjaData) => d.no_serial },
+    { header: "Asal", accessor: (d: AlatKerjaData) => d.asal },
+    {
+      header: "Tahun Pembelian",
+      accessor: (d: AlatKerjaData) => d.tahun_pembelian,
+    },
+    {
+      header: "Harga Pembelian",
+      accessor: (d: AlatKerjaData) =>
+        `Rp ${d.harga_pembelian.toLocaleString("id-ID")}`,
+    },
+    { header: "Pemegang", accessor: (d: AlatKerjaData) => d.pemegang },
+    { header: "Kondisi", accessor: (d: AlatKerjaData) => d.kondisi },
+  ];
+
+  const exportColumns = [
+    { header: "Kode Barang", accessor: (d: AlatKerjaData) => d.kode_barang },
+    { header: "Nama Barang", accessor: (d: AlatKerjaData) => d.nama_barang },
     { header: "Merek", accessor: (d: AlatKerjaData) => d.merek },
     {
       header: "No. Registrasi",
@@ -127,12 +155,13 @@ export default function AlatKerjaTable() {
         `Rp ${d.harga_pembelian.toLocaleString("id-ID")}`,
     },
     { header: "Kondisi", accessor: (d: AlatKerjaData) => d.kondisi },
-
+    { header: "Pemegang", accessor: (d: AlatKerjaData) => d.pemegang },
+    { header: "Keterangan", accessor: (d: AlatKerjaData) => d.keterangan },
   ];
 
-  const exportHeaders = columns.map((col) => col.header);
-  const exportRows = filtered.map((row) =>
-    columns.map((col) => col.accessor(row))
+  const exportHeaders = exportColumns.map((col) => col.header);
+  const exportRows = (search ? filtered : data).map((row) =>
+    exportColumns.map((col) => col.accessor(row))
   );
 
   return (
@@ -150,7 +179,11 @@ export default function AlatKerjaTable() {
           <SearchInput value={search} onChange={setSearch} />
           <ExcelButton
             onClick={() =>
-              handleExportExcel(exportRows, `Data Aset ${no_registrasi ?? "Alat Kerja"}`)
+              handleExportExcel(
+                exportHeaders,
+                exportRows,
+                `Data Aset ${no_registrasi ?? "Alat Kerja"}`
+              )
             }
           />
           <PDFButton

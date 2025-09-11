@@ -28,6 +28,7 @@ const FormDisableTanaman: React.FC = () => {
   return (
     <div className="w-full mx-auto p-6 bg-white rounded shadow dark:bg-white/[0.03]">
       <form className="flex flex-col gap-6 w-full text-theme-xs font-medium text-gray-600 dark:text-gray-300">
+        <InputField label="Kode Barang" value={tanaman.kode_barang} />
         <InputField label="Nama" value={tanaman.nama} />
         <InputField label="Jenis" value={tanaman.jenis} />
         <InputField label="Stok" value={tanaman.stok?.toString() ?? "-"} />

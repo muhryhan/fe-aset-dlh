@@ -1,5 +1,11 @@
 import React from "react";
-import { FaTools, FaDollyFlatbed, FaEdit, FaTrash } from "react-icons/fa";
+import {
+  FaTools,
+  FaDollyFlatbed,
+  FaEdit,
+  FaTrash,
+  FaInfoCircle,
+} from "react-icons/fa";
 
 // --- Base Props ---
 interface ActionButtonProps {
@@ -18,7 +24,9 @@ export const ServiceButton: React.FC<ActionButtonProps> = ({ onClick }) => (
   </button>
 );
 
-export const DistributionButton: React.FC<ActionButtonProps> = ({ onClick }) => (
+export const DistributionButton: React.FC<ActionButtonProps> = ({
+  onClick,
+}) => (
   <button
     onClick={onClick}
     className="text-green-600 hover:text-blue-800"
@@ -45,6 +53,16 @@ export const DeleteButton: React.FC<ActionButtonProps> = ({ onClick }) => (
     title="Hapus"
   >
     <FaTrash size={20} />
+  </button>
+);
+
+export const DetailButton: React.FC<ActionButtonProps> = ({ onClick }) => (
+  <button
+    onClick={onClick}
+    className="text-blue-800 hover:text-gray-600"
+    title="Detail"
+  >
+    <FaInfoCircle size={19} />
   </button>
 );
 

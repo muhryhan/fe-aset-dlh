@@ -13,23 +13,30 @@ export function handleExportPdf(
     )
   );
 
-  const doc = new jsPDF();
+  const doc = new jsPDF({
+    orientation: "landscape",
+    unit: "mm",
+    format: "legal",
+  });
+
+  const pageWidth = doc.internal.pageSize.getWidth(); // 355.6 mm
+  const centerX = pageWidth / 2; // 177.8 mm
 
   // === KOP SURAT ===
   doc.setFontSize(12);
-  doc.setFont("helvetica", "normal");
-  doc.text("PEMERINTAH KOTA PALU", 105, 14, { align: "center" });
+  doc.setFont("helvetica", "bold");
+  doc.text("PEMERINTAH KOTA PALU", centerX, 14, { align: "center" });
 
   doc.setFontSize(14);
   doc.setFont("helvetica", "bold");
-  doc.text("DINAS LINGKUNGAN HIDUP", 105, 20, { align: "center" });
-  doc.text("KOTA PALU", 105, 26, { align: "center" });
+  doc.text("DINAS LINGKUNGAN HIDUP", centerX, 20, { align: "center" });
+  doc.text("KOTA PALU", centerX, 26, { align: "center" });
 
   doc.setFontSize(8);
   doc.setFont("helvetica", "bold");
   doc.text(
     "Jl. Pipit, Tanamodindi, Kec. Palu Selatan, Kota Palu, Sulawesi Tengah 94111",
-    105,
+    centerX,
     30,
     { align: "center" }
   );
@@ -37,7 +44,7 @@ export function handleExportPdf(
 
   // === Garis pembatas kop surat ===
   doc.setLineWidth(0.5);
-  doc.line(15, 32, 195, 32);
+  doc.line(15, 32, pageWidth - 15, 32);
 
   // === Tabel dimulai dari bawah garis kop surat ===
   autoTable(doc, {
@@ -45,7 +52,7 @@ export function handleExportPdf(
     body: stringifiedRows,
     startY: 36, // mulai di bawah garis
     styles: { fontSize: 8 },
-    headStyles: { fillColor: [100, 100, 255] }, // opsional: styling header
+    headStyles: { fillColor: [100, 100, 255] },
   });
 
   doc.save(`${filename}.pdf`);

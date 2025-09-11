@@ -1,6 +1,7 @@
 export interface TanahData {
   id_tanah: number;
   gambar: string;
+  kode_barang: string;
   nama_barang: string;
   peruntukan: string;
   alamat: string;

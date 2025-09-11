@@ -28,6 +28,8 @@ const FormDisableAlatKerja: React.FC = () => {
   return (
     <div className="w-full mx-auto p-6 bg-white rounded shadow dark:bg-white/[0.03]">
       <form className="flex flex-col gap-6 w-full text-theme-xs font-medium text-gray-600 dark:text-gray-300">
+        <InputField label="Kode Barang" value={alatkerja.kode_barang} />
+        <InputField label="Nama Barang" value={alatkerja.nama_barang} />
         <InputField label="Merek" value={alatkerja.merek} />
         <InputField label="Nomor Registrasi" value={alatkerja.no_registrasi} />
         <InputField label="Nomor Serial" value={alatkerja.no_serial} />
@@ -45,6 +47,7 @@ const FormDisableAlatKerja: React.FC = () => {
           }
         />
         <InputField label="Kondisi" value={alatkerja.kondisi} />
+        <InputField label="Pemegang" value={alatkerja.pemegang} />
         <InputField label="Keterangan" value={alatkerja.keterangan} />
       </form>
     </div>

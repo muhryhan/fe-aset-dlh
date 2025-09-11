@@ -39,8 +39,11 @@ export default function AcTable() {
   const { search, setSearch, filtered } = useSearch(
     data,
     (item, query) =>
+      item.kode_barang.toLowerCase().includes(query) ||
+      item.nama_barang.toLowerCase().includes(query) ||
       item.merek.toLowerCase().includes(query) ||
       item.no_registrasi.toLowerCase().includes(query) ||
+      item.no_serial.toLowerCase().includes(query) ||
       item.ukuran.toLowerCase().includes(query) ||
       item.ruangan.toLowerCase().includes(query) ||
       item.kondisi.toLowerCase().includes(query) ||
@@ -109,6 +112,30 @@ export default function AcTable() {
         </a>
       ),
     },
+    { header: "Kode Barang", accessor: (d: AcData) => d.kode_barang },
+    { header: "Merek", accessor: (d: AcData) => d.merek },
+    {
+      header: "No. Registrasi",
+      accessor: (d: AcData) => d.no_registrasi,
+    },
+    { header: "No. Serial", accessor: (d: AcData) => d.no_serial },
+    { header: "Ruangan", accessor: (d: AcData) => d.ruangan },
+    { header: "Asal", accessor: (d: AcData) => d.asal },
+    {
+      header: "Tahun Pembelian",
+      accessor: (d: AcData) => d.tahun_pembelian,
+    },
+    {
+      header: "Harga Pembelian",
+      accessor: (d: AcData) =>
+        `Rp ${d.harga_pembelian.toLocaleString("id-ID")}`,
+    },
+    { header: "Kondisi", accessor: (d: AcData) => d.kondisi },
+  ];
+
+  const exportColumns = [
+    { header: "Kode Barang", accessor: (d: AcData) => d.kode_barang },
+    { header: "Nama Barang", accessor: (d: AcData) => d.nama_barang },
     { header: "Merek", accessor: (d: AcData) => d.merek },
     {
       header: "No. Registrasi",
@@ -128,11 +155,12 @@ export default function AcTable() {
         `Rp ${d.harga_pembelian.toLocaleString("id-ID")}`,
     },
     { header: "Kondisi", accessor: (d: AcData) => d.kondisi },
+    { header: "Keterangan", accessor: (d: AcData) => d.keterangan },
   ];
 
-  const exportHeaders = columns.map((col) => col.header);
-  const exportRows = filtered.map((row) =>
-    columns.map((col) => col.accessor(row))
+  const exportHeaders = exportColumns.map((col) => col.header);
+  const exportRows = (search ? filtered : data).map((row) =>
+    exportColumns.map((col) => col.accessor(row))
   );
 
   return (
@@ -150,7 +178,11 @@ export default function AcTable() {
           <SearchInput value={search} onChange={setSearch} />
           <ExcelButton
             onClick={() =>
-              handleExportExcel(exportRows, `Data Aset ${no_registrasi ?? "Ac"}`)
+              handleExportExcel(
+                exportHeaders,
+                exportRows,
+                `Data Aset ${no_registrasi ?? "Ac"}`
+              )
             }
           />
           <PDFButton

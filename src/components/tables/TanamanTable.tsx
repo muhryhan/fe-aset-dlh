@@ -40,6 +40,7 @@ export default function TanamanTable() {
   const { search, setSearch, filtered } = useSearch(
     data,
     (item, query) =>
+      item.kode_barang.toLowerCase().includes(query) ||
       item.nama.toLowerCase().includes(query) ||
       item.jenis.toLowerCase().includes(query)
   );
@@ -95,6 +96,7 @@ export default function TanamanTable() {
         </a>
       ),
     },
+    { header: "Kode Barang", accessor: (d: TanamanData) => d.kode_barang },
     { header: "Nama", accessor: (d: TanamanData) => d.nama },
     {
       header: "Jenis",
@@ -107,9 +109,23 @@ export default function TanamanTable() {
     { header: "Keterangan", accessor: (d: TanamanData) => d.keterangan },
   ];
 
-  const exportHeaders = columns.map((col) => col.header);
-  const exportRows = filtered.map((row) =>
-    columns.map((col) => col.accessor(row))
+  const exportColumns = [
+    { header: "Kode Barang", accessor: (d: TanamanData) => d.kode_barang },
+    { header: "Nama", accessor: (d: TanamanData) => d.nama },
+    {
+      header: "Jenis",
+      accessor: (d: TanamanData) => d.jenis,
+    },
+    {
+      header: "Stok",
+      accessor: (d: TanamanData) => d.stok,
+    },
+    { header: "Keterangan", accessor: (d: TanamanData) => d.keterangan },
+  ];
+
+  const exportHeaders = exportColumns.map((col) => col.header);
+  const exportRows = (search ? filtered : data).map((row) =>
+    exportColumns.map((col) => col.accessor(row))
   );
 
   return (
@@ -128,6 +144,7 @@ export default function TanamanTable() {
           <ExcelButton
             onClick={() =>
               handleExportExcel(
+                exportHeaders,
                 exportRows,
                 `Data Aset ${id_tanaman ?? "Tanaman"}`
               )

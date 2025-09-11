@@ -41,14 +41,16 @@ export default function KendaraanTable() {
   const { search, setSearch, filtered } = useSearch(
     data,
     (item, query) =>
+      item.kode_barang.toLowerCase().includes(query) ||
       item.merek.toLowerCase().includes(query) ||
       item.no_polisi.toLowerCase().includes(query) ||
       item.warna.toLowerCase().includes(query) ||
-      item.pemegang.toLowerCase().includes(query) ||
-      item.penggunaan.toLowerCase().includes(query) ||
-      item.kondisi.toLowerCase().includes(query) ||
+      item.tahun_pembuatan.toString().includes(query) ||
       item.kategori.toLowerCase().includes(query) ||
-      item.tahun_pembuatan.toString().includes(query)
+      item.pemegang.toLowerCase().includes(query) ||
+      item.nik.toString().includes(query) ||
+      item.penggunaan.toLowerCase().includes(query) ||
+      item.kondisi.toLowerCase().includes(query)
   );
 
   const BASE_URL = import.meta.env.VITE_BASE_URL || "http://localhost:3000";
@@ -115,8 +117,31 @@ export default function KendaraanTable() {
         </a>
       ),
     },
+    { header: "Kode Barang", accessor: (d: KendaraanData) => d.kode_barang },
     { header: "Merek", accessor: (d: KendaraanData) => d.merek },
     { header: "No. Polisi", accessor: (d: KendaraanData) => d.no_polisi },
+    { header: "Warna", accessor: (d: KendaraanData) => d.warna },
+    {
+      header: "Harga Pembelian",
+      accessor: (d: KendaraanData) =>
+        `Rp ${d.harga_pembelian.toLocaleString("id-ID")}`,
+    },
+    {
+      header: "Tahun Pembuatan",
+      accessor: (d: KendaraanData) => d.tahun_pembuatan,
+    },
+    { header: "Kategori", accessor: (d: KendaraanData) => d.kategori },
+    { header: "Pemegang", accessor: (d: KendaraanData) => d.pemegang },
+    { header: "Penggunaan", accessor: (d: KendaraanData) => d.penggunaan },
+    { header: "Kondisi", accessor: (d: KendaraanData) => d.kondisi },
+  ];
+
+  const exportColumns = [
+    { header: "Kode Barang", accessor: (d: KendaraanData) => d.kode_barang },
+    { header: "Merek", accessor: (d: KendaraanData) => d.merek },
+    { header: "No. Polisi", accessor: (d: KendaraanData) => d.no_polisi },
+    { header: "No. Mesin", accessor: (d: KendaraanData) => d.no_mesin },
+    { header: "No. Rangka", accessor: (d: KendaraanData) => d.no_rangka },
     { header: "Warna", accessor: (d: KendaraanData) => d.warna },
     {
       header: "Harga Pembelian",
@@ -132,15 +157,15 @@ export default function KendaraanTable() {
       header: "Pajak",
       accessor: (d: KendaraanData) => formatDate(d.pajak),
     },
-
     { header: "Pemegang", accessor: (d: KendaraanData) => d.pemegang },
+    { header: "Nik", accessor: (d: KendaraanData) => d.nik },
     { header: "Penggunaan", accessor: (d: KendaraanData) => d.penggunaan },
     { header: "Kondisi", accessor: (d: KendaraanData) => d.kondisi },
   ];
 
-  const exportHeaders = columns.map((col) => col.header);
-  const exportRows = filtered.map((row) =>
-    columns.map((col) => col.accessor(row))
+  const exportHeaders = exportColumns.map((col) => col.header);
+  const exportRows = (search ? filtered : data).map((row) =>
+    exportColumns.map((col) => col.accessor(row))
   );
 
   return (
@@ -154,16 +179,18 @@ export default function KendaraanTable() {
             }}
           />
         </div>
-        <div className="flex gap-2 items-center">
+        <div className="flex gap-2 items-center flex-shrink-0">
           <SearchInput value={search} onChange={setSearch} />
           <ExcelButton
             onClick={() =>
               handleExportExcel(
+                exportHeaders,
                 exportRows,
                 `Data Aset ${no_polisi ?? "Kendaraan"}`
               )
             }
           />
+
           <PDFButton
             onClick={() =>
               handleExportPdf(
@@ -192,114 +219,110 @@ export default function KendaraanTable() {
         <p className="p-4 text-gray-500 dark:tekt-white">Loading data...</p>
       ) : (
         <div className="max-w-full overflow-x-auto">
-          <div className="min-w-[1102px]">
-            <Table>
-              {/* Table Header */}
-              <TableHeader className="border-b border-gray-100 dark:border-white/[0.05]">
-                <TableRow>
-                  {columns.map((col, idx) => (
-                    <TableCell
-                      key={idx}
-                      isHeader
-                      className="px-5 py-3 font-bold text-center text-theme-sm text-gray-700 dark:text-gray-400"
-                    >
-                      {col.header}
-                    </TableCell>
-                  ))}
+          <Table className="min-w-[1102px]">
+            {/* Table Header */}
+            <TableHeader className="border-b border-gray-100 dark:border-white/[0.05]">
+              <TableRow>
+                {columns.map((col, idx) => (
                   <TableCell
+                    key={idx}
                     isHeader
                     className="px-5 py-3 font-bold text-center text-theme-sm text-gray-700 dark:text-gray-400"
                   >
-                    Aksi
+                    {col.header}
+                  </TableCell>
+                ))}
+                <TableCell
+                  isHeader
+                  className="px-5 py-3 font-bold text-center text-theme-sm text-gray-700 dark:text-gray-400"
+                >
+                  Aksi
+                </TableCell>
+              </TableRow>
+            </TableHeader>
+
+            {/* Table Body */}
+            <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
+              {paginatedData.length === 0 ? (
+                <TableRow>
+                  <TableCell
+                    colSpan={columns.length + 1}
+                    className="text-center text-gray-400 italic py-4"
+                  >
+                    Tidak ada data
                   </TableCell>
                 </TableRow>
-              </TableHeader>
-
-              {/* Table Body */}
-              <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
-                {paginatedData.length === 0 ? (
-                  <TableRow>
-                    <TableCell
-                      colSpan={columns.length + 1}
-                      className="text-center text-gray-400 italic py-4"
-                    >
-                      Tidak ada data
+              ) : (
+                paginatedData.map((item) => (
+                  <TableRow key={item.id_kendaraan}>
+                    {columns.map((col, idx) => (
+                      <TableCell
+                        key={idx}
+                        className="px-5 py-3 text-center text-theme-sm font-medium text-gray-600 dark:text-gray-400"
+                      >
+                        {col.accessor(item)}
+                      </TableCell>
+                    ))}
+                    <TableCell className="px-5 py-3 text-center text-theme-sm font-medium text-gray-600 dark:text-gray-400">
+                      <div className="flex items-center justify-center gap-2">
+                        <ServiceButton
+                          onClick={() =>
+                            navigate(
+                              `/servis/kendaraan/nounik/${encodeURIComponent(
+                                item.no_polisi
+                              )}`
+                            )
+                          }
+                        />
+                        {role && hakAkses(role, "kendaraan", "update") && (
+                          <EditButton
+                            onClick={() => handleEdit(item.no_polisi)}
+                          />
+                        )}
+                        {role && hakAkses(role, "kendaraan", "delete") && (
+                          <DeleteButton
+                            onClick={() => handleDelete(item.id_kendaraan)}
+                          />
+                        )}
+                      </div>
                     </TableCell>
                   </TableRow>
-                ) : (
-                  paginatedData.map((item) => (
-                    <TableRow key={item.id_kendaraan}>
-                      {columns.map((col, idx) => (
-                        <TableCell
-                          key={idx}
-                          className="px-5 py-3 text-center text-theme-sm font-medium text-gray-600 dark:text-gray-400"
-                        >
-                          {col.accessor(item)}
-                        </TableCell>
-                      ))}
-                      <TableCell className="px-5 py-3 text-center text-theme-sm font-medium text-gray-600 dark:text-gray-400">
-                        <div className="flex items-center justify-center gap-2">
-                          <ServiceButton
-                            onClick={() =>
-                              navigate(
-                                `/servis/kendaraan/nounik/${encodeURIComponent(
-                                  item.no_polisi
-                                )}`
-                              )
-                            }
-                          />
-                          {role && hakAkses(role, "kendaraan", "update") && (
-                            <EditButton
-                              onClick={() => handleEdit(item.no_polisi)}
-                            />
-                          )}
-                          {role && hakAkses(role, "kendaraan", "delete") && (
-                            <DeleteButton
-                              onClick={() => handleDelete(item.id_kendaraan)}
-                            />
-                          )}
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  ))
-                )}
-              </TableBody>
-            </Table>
+                ))
+              )}
+            </TableBody>
+          </Table>
 
-            {/* Pagination */}
-            <div className="flex justify-center mt-4 items-center">
-              <button
-                onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
-                disabled={currentPage === 1}
-                className="px-2 py-1 rounded bg-gray-200 text-gray-700 disabled:opacity-50 mr-5"
-              >
-                &lt;
-              </button>
-              <div className="flex space-x-1">
-                {getPageNumbers().map((page) => (
-                  <button
-                    key={page}
-                    onClick={() => setCurrentPage(page)}
-                    className={`px-3 py-1 rounded ${
-                      currentPage === page
-                        ? "bg-blue-600 text-white"
-                        : "bg-gray-200 text-gray-700"
-                    }`}
-                  >
-                    {page}
-                  </button>
-                ))}
-              </div>
-              <button
-                onClick={() =>
-                  setCurrentPage((p) => Math.min(p + 1, totalPages))
-                }
-                disabled={currentPage === totalPages}
-                className="px-2 py-1 rounded bg-gray-200 text-gray-700 disabled:opacity-50 ml-5"
-              >
-                &gt;
-              </button>
+          {/* Pagination */}
+          <div className="flex justify-center mt-4 items-center">
+            <button
+              onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+              disabled={currentPage === 1}
+              className="px-2 py-1 rounded bg-gray-200 text-gray-700 disabled:opacity-50 mr-5"
+            >
+              &lt;
+            </button>
+            <div className="flex space-x-1">
+              {getPageNumbers().map((page) => (
+                <button
+                  key={page}
+                  onClick={() => setCurrentPage(page)}
+                  className={`px-3 py-1 rounded ${
+                    currentPage === page
+                      ? "bg-blue-600 text-white"
+                      : "bg-gray-200 text-gray-700"
+                  }`}
+                >
+                  {page}
+                </button>
+              ))}
             </div>
+            <button
+              onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
+              disabled={currentPage === totalPages}
+              className="px-2 py-1 rounded bg-gray-200 text-gray-700 disabled:opacity-50 ml-5"
+            >
+              &gt;
+            </button>
           </div>
         </div>
       )}

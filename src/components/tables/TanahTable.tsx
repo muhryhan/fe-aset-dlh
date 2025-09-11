@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useSearch } from "../../hooks/useSearch";
 import { usePagination } from "../../hooks/usePagination";
 import { useFetch } from "../../hooks/useFetch";
@@ -11,6 +12,7 @@ import { useAuthStore } from "../../stores/authStore";
 
 import SearchInput from "../ui/search/Search";
 import {
+  DetailButton,
   EditButton,
   DeleteButton,
   AddButton,
@@ -39,6 +41,7 @@ export default function TanahTable() {
   const { search, setSearch, filtered } = useSearch(
     data,
     (item, query) =>
+      item.kode_barang.toLowerCase().includes(query) ||
       item.nama_barang.toLowerCase().includes(query) ||
       item.peruntukan.toLowerCase().includes(query) ||
       item.alamat.toLowerCase().includes(query) ||
@@ -60,6 +63,7 @@ export default function TanahTable() {
     getPageNumbers,
   } = usePagination(filtered);
 
+  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selected, setSelected] = useState<TanahData | null>(null);
 
@@ -98,6 +102,34 @@ export default function TanahTable() {
         </a>
       ),
     },
+    { header: "Kode Barang", accessor: (d: TanahData) => d.kode_barang },
+    { header: "Peruntukan", accessor: (d: TanahData) => d.peruntukan },
+    { header: "Alamat", accessor: (d: TanahData) => d.alamat },
+    {
+      header: "Luas (m²)",
+      accessor: (d: TanahData) => d.luas.toLocaleString("id-ID"),
+    },
+    {
+      header: "Tahun Pengadaan",
+      accessor: (d: TanahData) => d.tahun_pengadaan,
+    },
+    {
+      header: "Hak",
+      accessor: (d: TanahData) => d.hak,
+    },
+    {
+      header: "Status Sertifikat",
+      accessor: (d: TanahData) => d.status_sertifikat,
+    },
+    { header: "Asal", accessor: (d: TanahData) => d.asal },
+    {
+      header: "Harga",
+      accessor: (d: TanahData) => `Rp ${d.harga.toLocaleString("id-ID")}`,
+    },
+  ];
+
+  const exportColumns = [
+    { header: "Kode Barang", accessor: (d: TanahData) => d.kode_barang },
     { header: "Nama Barang", accessor: (d: TanahData) => d.nama_barang },
     { header: "Peruntukan", accessor: (d: TanahData) => d.peruntukan },
     { header: "Alamat", accessor: (d: TanahData) => d.alamat },
@@ -136,9 +168,9 @@ export default function TanahTable() {
     },
   ];
 
-  const exportHeaders = columns.map((col) => col.header);
-  const exportRows = filtered.map((row) =>
-    columns.map((col) => col.accessor(row))
+  const exportHeaders = exportColumns.map((col) => col.header);
+  const exportRows = (search ? filtered : data).map((row) =>
+    exportColumns.map((col) => col.accessor(row))
   );
 
   return (
@@ -156,7 +188,7 @@ export default function TanahTable() {
           <SearchInput value={search} onChange={setSearch} />
           <ExcelButton
             onClick={() =>
-              handleExportExcel(exportRows, `Data Aset ${id_tanah ?? "Tanah"}`)
+              handleExportExcel(exportHeaders, exportRows, `Data Aset ${id_tanah ?? "Tanah"}`)
             }
           />
           <PDFButton
@@ -234,6 +266,15 @@ export default function TanahTable() {
                       ))}
                       <TableCell className="px-5 py-3 text-center text-theme-sm font-medium text-gray-600 dark:text-gray-400">
                         <div className="flex items-center justify-center gap-2">
+                          <DetailButton
+                            onClick={() =>
+                              navigate(
+                                `/detail-tanah/${encodeURIComponent(
+                                  item.id_tanah
+                                )}`
+                              )
+                            }
+                          />
                           {role && hakAkses(role, "tanah", "update") && (
                             <EditButton
                               onClick={() => handleEdit(item.id_tanah)}

@@ -25,7 +25,7 @@ const kategori = [
 ];
 const kondisi = [
   { label: "Baik", value: "Baik" },
-  { label: "Rusak Ringan", value: "Rusak Ringan" }, 
+  { label: "Rusak Ringan", value: "Rusak Ringan" },
   { label: "Rusak Berat", value: "Rusak Berat" },
 ];
 
@@ -39,6 +39,7 @@ export default function KendaraanFormInput({ initialData, onSuccess }: Props) {
     id_kendaraan: 0,
     qrcode: "",
     gambar: "",
+    kode_barang: "",
     merek: "",
     no_polisi: "",
     no_mesin: "",
@@ -67,6 +68,7 @@ export default function KendaraanFormInput({ initialData, onSuccess }: Props) {
     endpoint: "/api/kendaraan",
     requiredFields: [
       "gambar",
+      "kode_barang",
       "merek",
       "no_polisi",
       "no_mesin",
@@ -116,6 +118,14 @@ export default function KendaraanFormInput({ initialData, onSuccess }: Props) {
             id_file="gambar"
             onChange={handleFileChange}
             className="w-full"
+          />
+        </div>
+        <div>
+          <Label htmlFor="kode_barang">Kode Barang</Label>
+          <Input
+            id="kode_barang"
+            value={formData.kode_barang}
+            onChange={handleInputChange}
           />
         </div>
         <div>
