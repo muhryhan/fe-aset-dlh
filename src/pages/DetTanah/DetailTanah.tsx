@@ -10,9 +10,9 @@ export default function DetailTanah() {
         title="Detail Aset Tanah"
         description="Halaman detail aset tanah"
       />
-      <PageBreadcrumb pageTitle="Riwayat Tanah" />
+      <PageBreadcrumb pageTitle="Detail Data Lokasi Tanah" />
       <div className="space-y-6">
-        <ComponentCard title="Detail Tanah">
+        <ComponentCard title="Detail Data">
           <FormDisableTanah />
         </ComponentCard>
       </div>

@@ -128,6 +128,9 @@ const QrScanner = () => {
     <div className="flex flex-col items-center justify-center p-4 sm:p-6 space-y-6 w-full">
       {!result && (
         <>
+          <h1 className="text-2xl sm:text-3xl lg:text-2xl font-bold text-gray-800 dark:text-white">
+            SCAN QR CODE
+          </h1>
           {/* Tombol Scan Kamera */}
           <button
             onClick={startCameraScan}

@@ -5,8 +5,39 @@ import ThemeTogglerTwo from "../../components/common/ThemeTogglerTwo";
 const ScanPage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-200 via-blue-300 to-blue-200 dark:from-gray-800 dark:to-gray-900 flex flex-col justify-center py-8 px-4 sm:px-6 lg:px-12">
+      <div
+        className="absolute inset-0 bg-no-repeat bg-center"
+        style={{
+          backgroundImage: "url('/src/icons/tuguNol.png')",
+          backgroundSize: "800px", // bisa px, %, contain, cover
+          opacity: 0.1, // transparansi
+        }}
+      ></div>
+
+      {/* Daun kelor di tiap sudut */}
+      <img
+        src="/src/icons/kelor.png"
+        alt="Daun Kelor"
+        className="absolute top-0 left-0 w-24 sm:w-24 md:w-64 opacity-40 pointer-events-none rotate-90"
+      />
+      <img
+        src="/src/icons/kelor.png"
+        alt="Daun Kelor"
+        className="absolute top-0 right-0 w-24 sm:w-24 md:w-64 opacity-40 pointer-events-none rotate-180"
+      />
+      <img
+        src="/src/icons/kelor.png"
+        alt="Daun Kelor"
+        className="absolute bottom-0 left-0 w-24 sm:w-24 md:w-64 opacity-40 pointer-events-none"
+      />
+      <img
+        src="/src/icons/kelor.png"
+        alt="Daun Kelor"
+        className="absolute bottom-0 right-0 w-24 sm:w-24 md:w-64 opacity-40 pointer-events-none -rotate-90"
+      />
+
       {/* Grid Layout: stack di HP, 2 kolom di tablet/laptop */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center w-full max-w-6xl mx-auto">
+      <div className="relative grid grid-cols-1 md:grid-cols-2 gap-10 items-center w-full max-w-6xl mx-auto">
         {/* Kiri: Logo + Judul */}
         <div className="flex flex-col items-center md:items-start text-center md:text-left">
           {/* Logo */}
@@ -25,11 +56,11 @@ const ScanPage = () => {
 
           {/* Judul */}
           <div className="mb-8">
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-gray-800 dark:text-white">
-              SCAN
+            <h1 className="text-4xl sm:text-6xl lg:text-5xl font-extrabold text-green-800 dark:text-white">
+              DINAS LINGKUNGAN HIDUP
             </h1>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-normal text-gray-800 dark:text-white">
-              QR CODE
+            <h1 className="text-3xl sm:text-4xl lg:text-3xl font-bold text-gray-800 dark:text-white">
+              KOTA PALU
             </h1>
             <p className="text-gray-700 dark:text-gray-300 mt-4 text-base sm:text-lg leading-relaxed max-w-md mx-auto md:mx-0">
               Upload file atau arahkan kamera ke QR Code untuk melihat riwayat
@@ -41,7 +72,7 @@ const ScanPage = () => {
           <div className="flex justify-center md:justify-start">
             <Link
               to="/"
-              className="flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 
+              className="flex items-center justify-center w-8 h-8 sm:w-8 sm:h-8 
        bg-brand-500 text-white rounded-full 
        shadow-lg hover:shadow-2xl transition-all duration-300 
        transform hover:scale-110 hover:rotate-6"
