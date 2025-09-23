@@ -30,22 +30,22 @@ export default function AuthLayout({
 
         {/* Daun kelor di tiap sudut */}
         <img
-          src="/src/icons/kelor.png"
+          src="/public/images/logo/kelor.png"
           alt="Daun Kelor"
           className="absolute top-0 left-0 w-32 opacity-40 pointer-events-none rotate-90"
         />
         <img
-          src="/src/icons/kelor.png"
+          src="/public/images/logo/kelor.png"
           alt="Daun Kelor"
           className="absolute top-0 right-0 w-32 opacity-40 pointer-events-none rotate-180"
         />
         <img
-          src="/src/icons/kelor.png"
+          src="/public/images/logo/kelor.png"
           alt="Daun Kelor"
           className="absolute bottom-0 left-0 w-32 opacity-40 pointer-events-none"
         />
         <img
-          src="/src/icons/kelor.png"
+          src="/public/images/logo/kelor.png"
           alt="Daun Kelor"
           className="absolute bottom-0 right-0 w-32 opacity-40 pointer-events-none -rotate-90"
         />
@@ -55,12 +55,12 @@ export default function AuthLayout({
           <div className="flex flex-row items-center justify-center gap-4 mb-6">
             <img
               className="h-12 sm:h-16 w-auto"
-              src="/src/icons/logo-kota-palu.png"
+              src="/public/images/logo/logo-kota-palu.png"
               alt="Logo Kota Palu"
             />
             <img
               className="h-16 sm:h-20 w-auto"
-              src="/src/icons/klhk.png"
+              src="/public/images/logo/klhk.png"
               alt="Logo KLHK"
             />
           </div>
