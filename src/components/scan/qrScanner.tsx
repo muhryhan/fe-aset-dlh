@@ -16,7 +16,6 @@ const QrScanner = () => {
 
   useEffect(() => {
     codeReaderRef.current = new BrowserMultiFormatReader();
-
     return () => {
       stopCamera();
     };
@@ -37,7 +36,7 @@ const QrScanner = () => {
     try {
       const constraints = {
         video: {
-          facingMode: "environment", // kamera belakang (untuk HP)
+          facingMode: "environment",
         },
       };
 
@@ -95,6 +94,7 @@ const QrScanner = () => {
   }, [result]);
 
   const resetScanner = () => {
+    stopCamera();
     setResult(null);
     setError(null);
     setDataSerber(null);
@@ -133,27 +133,40 @@ const QrScanner = () => {
           <h1 className="text-2xl sm:text-3xl lg:text-2xl font-bold text-gray-800 dark:text-white">
             SCAN QR CODE
           </h1>
+
           {/* Tombol Scan Kamera */}
           <button
             onClick={startCameraScan}
             className="w-full sm:max-w-sm flex items-center justify-center gap-3 
-                     bg-gradient-to-r from-brand-500 to-brand-900 
-                     text-white font-semibold 
-                     px-4 sm:px-6 py-3 sm:py-4 rounded-2xl shadow-lg 
-                     hover:scale-105 hover:shadow-2xl hover:brightness-110 
-                     transition-all duration-300 text-base sm:text-lg"
+                    bg-gradient-to-r from-brand-500 to-brand-900 
+                    text-white font-semibold 
+                    px-4 sm:px-6 py-3 sm:py-4 rounded-2xl shadow-lg 
+                    hover:scale-105 hover:shadow-2xl hover:brightness-110 
+                    transition-all duration-300 text-base sm:text-lg"
           >
             <span className="text-xl sm:text-2xl">📷</span> Scan dari Kamera
           </button>
 
+          {/* Kamera aktif (muncul di antara tombol Scan & Upload) */}
+          {scanning && (
+            <video
+              ref={videoRef}
+              className="w-full sm:max-w-sm rounded-2xl shadow-xl border-2 
+                      border-indigo-300 dark:border-gray-600"
+              autoPlay
+              muted
+              playsInline
+            />
+          )}
+
           {/* Tombol Upload Gambar */}
           <label
             className="w-full sm:max-w-sm flex items-center justify-center gap-3 
-                     bg-gradient-to-r from-green-900 to-green-500 
-                     text-white font-semibold 
-                     px-4 sm:px-6 py-3 sm:py-4 rounded-2xl shadow-lg cursor-pointer 
-                     hover:scale-105 hover:shadow-2xl hover:brightness-110 
-                     transition-all duration-300 text-base sm:text-lg"
+                    bg-gradient-to-r from-green-900 to-green-500 
+                    text-white font-semibold 
+                    px-4 sm:px-6 py-3 sm:py-4 rounded-2xl shadow-lg cursor-pointer 
+                    hover:scale-105 hover:shadow-2xl hover:brightness-110 
+                    transition-all duration-300 text-base sm:text-lg"
           >
             <span className="text-xl sm:text-2xl">📁</span> Upload Gambar QR
             Code
@@ -164,28 +177,15 @@ const QrScanner = () => {
               hidden
             />
           </label>
-
-          {/* Kamera aktif */}
-          {scanning && (
-            <video
-              ref={videoRef}
-              className="w-full sm:max-w-sm rounded-2xl shadow-xl border-2 
-                       border-indigo-300 dark:border-gray-600"
-              autoPlay
-              muted
-              playsInline
-            />
-          )}
         </>
       )}
 
       {/* Hasil Scan */}
       {result && (
         <div className="text-center space-y-6 w-full">
-          {/* Nomor Aset */}
           <p
             className="text-green-800 dark:text-green-500 font-bold 
-                     text-xl sm:text-2xl tracking-wide"
+                    text-xl sm:text-2xl tracking-wide"
           >
             Nomor Aset:{" "}
             <span className="text-gray-900 dark:text-white break-words">
@@ -193,7 +193,6 @@ const QrScanner = () => {
             </span>
           </p>
 
-          {/* Loading & Error */}
           {loading && (
             <p className="text-white animate-pulse font-medium text-base sm:text-lg">
               ⏳ Memuat data servis...
@@ -205,14 +204,13 @@ const QrScanner = () => {
             </p>
           )}
 
-          {/* Data Service */}
           {!loading && !error && dataSerber && (
             <div
               className="bg-white dark:bg-gray-800 p-4 sm:p-6 rounded-2xl shadow-lg 
-                       w-full max-w-md text-sm sm:text-lg 
-                       text-gray-800 dark:text-gray-200 
-                       space-y-3 border border-gray-200 dark:border-gray-700 
-                       mx-auto"
+                      w-full max-w-md text-sm sm:text-lg 
+                      text-gray-800 dark:text-gray-200 
+                      space-y-3 border border-gray-200 dark:border-gray-700 
+                      mx-auto"
             >
               {dataSerber.no_polisi && (
                 <div className="flex flex-col sm:flex-row sm:justify-between gap-1 sm:gap-0 px-2 sm:px-10">
@@ -269,11 +267,11 @@ const QrScanner = () => {
           <button
             onClick={resetScanner}
             className="mt-4 w-full sm:max-w-md flex items-center justify-center gap-2
-                     bg-gradient-to-r from-brand-500 to-brand-900 
-                     text-white font-semibold 
-                     px-4 sm:px-6 py-3 sm:py-4 rounded-2xl shadow-lg 
-                     hover:scale-105 hover:shadow-2xl hover:brightness-110
-                     transition-all duration-300 text-base sm:text-lg"
+                    bg-gradient-to-r from-brand-500 to-brand-900 
+                    text-white font-semibold 
+                    px-4 sm:px-6 py-3 sm:py-4 rounded-2xl shadow-lg 
+                    hover:scale-105 hover:shadow-2xl hover:brightness-110
+                    transition-all duration-300 text-base sm:text-lg"
           >
             🔄 Scan Lagi
           </button>
