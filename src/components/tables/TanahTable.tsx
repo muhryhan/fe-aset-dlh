@@ -188,7 +188,11 @@ export default function TanahTable() {
           <SearchInput value={search} onChange={setSearch} />
           <ExcelButton
             onClick={() =>
-              handleExportExcel(exportHeaders, exportRows, `Data Aset ${id_tanah ?? "Tanah"}`)
+              handleExportExcel(
+                exportHeaders,
+                exportRows,
+                `Data Aset ${id_tanah ?? "Tanah"}`
+              )
             }
           />
           <PDFButton
