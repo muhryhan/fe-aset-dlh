@@ -8,9 +8,9 @@ const ScanPage = () => {
       <div
         className="absolute inset-0 bg-no-repeat bg-center"
         style={{
-          backgroundImage: "url('/src/icons/tuguNol.png')",
-          backgroundSize: "800px", // bisa px, %, contain, cover
-          opacity: 0.1, // transparansi
+          backgroundImage: "url('/images/logo/tuguNol.png')",
+          backgroundSize: "800px",
+          opacity: 0.1,
         }}
       ></div>
 

@@ -57,7 +57,10 @@ export default function SignInForm() {
     <div className="flex flex-col flex-1">
       <div className="flex flex-col justify-center flex-1 w-full max-w-md mx-auto">
         <div>
-          <div className="flex justify-center mb-6">
+          <div className="flex flex-col items-center justify-center mb-6 gap-2">
+            <p className="text-sm text-gray-500 dark:text-white">
+              Klik untuk melakukan scan QR Code
+            </p>
             <Link to="/scan">
               <QRIcon className="w-40 h-40 text-brand-500 dark:text-white cursor-pointer hover:scale-105 transition-transform duration-300" />
             </Link>
