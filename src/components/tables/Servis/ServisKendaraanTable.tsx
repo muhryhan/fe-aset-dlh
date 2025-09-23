@@ -156,6 +156,7 @@ export default function ServiceKendaraanTable() {
           <ExcelButton
             onClick={() =>
               handleExportExcel(
+                exportHeaders,
                 exportRows,
                 `Data Servis ${no_polisi ?? "Kendaraan"}`
               )

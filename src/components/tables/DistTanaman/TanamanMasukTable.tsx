@@ -97,6 +97,7 @@ export default function TanamanMasukTable() {
           <ExcelButton
             onClick={() =>
               handleExportExcel(
+                exportHeaders,
                 exportRows,
                 `Data Aset ${id_tanaman ?? "Tanaman Masuk"}`
               )
