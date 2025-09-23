@@ -16,22 +16,22 @@ const ScanPage = () => {
 
       {/* Daun kelor di tiap sudut */}
       <img
-        src="/public/images/logo/kelor.png"
+        src="/images/logo/kelor.png"
         alt="Daun Kelor"
         className="absolute top-0 left-0 w-24 sm:w-24 md:w-64 opacity-40 pointer-events-none rotate-90"
       />
       <img
-        src="/public/images/logo/kelor.png"
+        src="/images/logo/kelor.png"
         alt="Daun Kelor"
         className="absolute top-0 right-0 w-24 sm:w-24 md:w-64 opacity-40 pointer-events-none rotate-180"
       />
       <img
-        src="/public/images/logo/kelor.png"
+        src="/images/logo/kelor.png"
         alt="Daun Kelor"
         className="absolute bottom-0 left-0 w-24 sm:w-24 md:w-64 opacity-40 pointer-events-none"
       />
       <img
-        src="/public/images/logo/kelor.png"
+        src="/images/logo/kelor.png"
         alt="Daun Kelor"
         className="absolute bottom-0 right-0 w-24 sm:w-24 md:w-64 opacity-40 pointer-events-none -rotate-90"
       />
@@ -44,12 +44,12 @@ const ScanPage = () => {
           <div className="flex flex-row justify-center md:justify-start items-center gap-3 mb-6">
             <img
               className="h-8 sm:h-10 w-auto"
-              src="/public/images/logo/logo-kota-palu.png"
+              src="/images/logo/logo-kota-palu.png"
               alt="Logo Kota Palu"
             />
             <img
               className="h-12 sm:h-16 w-auto"
-              src="/public/images/logo/klhk.png"
+              src="/images/logo/klhk.png"
               alt="Logo KLHK"
             />
           </div>
