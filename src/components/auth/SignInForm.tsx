@@ -35,14 +35,18 @@ export default function SignInForm() {
       };
 
       login({ token, role, user });
-      
+
       document.cookie = `token=${token}; path=/;`;
       document.cookie = `id_user=${user.id}; path=/;`;
       document.cookie = `username=${user.name}; path=/;`;
 
       navigate("/home");
     } catch (err) {
-      console.error("Login gagal:", err);
+      if (err instanceof Error) {
+        console.error("Login gagal:", err.message);
+      } else {
+        console.error("Login gagal:", String(err));
+      }
       alert("Login gagal. Silakan cek kembali username dan kata sandi.");
     } finally {
       setLoading(false);

@@ -18,7 +18,7 @@ const QrScanner = () => {
     codeReaderRef.current = new BrowserMultiFormatReader();
 
     return () => {
-      stopCamera(); // berhenti saat komponen unmount
+      stopCamera();
     };
   }, []);
 
@@ -49,16 +49,18 @@ const QrScanner = () => {
         videoRef.current.play();
       }
 
-      await codeReaderRef.current?.decodeFromVideoDevice(
-        undefined,
-        videoRef.current!,
-        (result: Result | undefined) => {
-          if (result) {
-            setResult(result.getText());
-            stopCamera(); // berhenti setelah dapat hasil
+      if (codeReaderRef.current && videoRef.current) {
+        await codeReaderRef.current.decodeFromVideoDevice(
+          undefined,
+          videoRef.current,
+          (result: Result | undefined) => {
+            if (result) {
+              setResult(result.getText());
+              stopCamera();
+            }
           }
-        }
-      );
+        );
+      }
     } catch (e) {
       setError("Gagal mengakses kamera.");
       console.error(e);
