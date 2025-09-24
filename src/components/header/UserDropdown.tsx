@@ -3,16 +3,19 @@ import { DropdownItem } from "../ui/dropdown/DropdownItem";
 import { Dropdown } from "../ui/dropdown/Dropdown";
 import Button from "../ui/button/Button";
 import api from "../../services/api";
-import { logoutUser } from "../../services/api";
+import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "../../stores/authStore";
 
 export default function UserDropdown() {
+  const user = useAuthStore((s) => s.user);
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
   function handleSignOut() {
-  api.post("/api/logout").finally(() => {
-    logoutUser();
-  });
-}
+    api.post("/api/logout").finally(() => {
+      navigate("/");
+    });
+  }
 
   function toggleDropdown() {
     setIsOpen(!isOpen);
@@ -22,17 +25,6 @@ export default function UserDropdown() {
     setIsOpen(false);
   }
 
-  function getCookieValue(name: string): string | null {
-    const cookies = document.cookie.split("; ");
-    for (const cookie of cookies) {
-      const [key, value] = cookie.split("=");
-      if (key === name) {
-        return decodeURIComponent(value);
-      }
-    }
-    return null;
-  }
-
   return (
     <div className="relative">
       <button
@@ -40,7 +32,7 @@ export default function UserDropdown() {
         className="flex items-center text-gray-700 dropdown-toggle dark:text-gray-400"
       >
         <span className="block mr-1 font-medium text-theme-sm">
-          {getCookieValue("username")}
+          {user?.name ?? "Guest"}
         </span>
         <svg
           className={`stroke-gray-500 dark:stroke-gray-400 transition-transform duration-200 ${

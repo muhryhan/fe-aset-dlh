@@ -157,6 +157,7 @@ export default function ServiceAcTable() {
           <ExcelButton
             onClick={() =>
               handleExportExcel(
+                exportHeaders,
                 exportRows,
                 `Data Servis ${no_registrasi ?? "Ac"}`
               )

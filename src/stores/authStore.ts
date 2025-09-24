@@ -10,10 +10,8 @@ type AuthState = {
     id: string;
     name: string;
   } | null;
-  token: string | null;
 
   login: (data: {
-    token: string;
     role: Role | null;
     user: { id: string; name: string };
   }) => void;
@@ -27,12 +25,10 @@ export const useAuthStore = create<AuthState>()(
       isLoggedIn: false,
       role: null,
       user: null,
-      token: null,
 
-      login: ({ token, role, user }) =>
+      login: ({ role, user }) =>
         set({
           isLoggedIn: true,
-          token,
           role,
           user,
         }),
@@ -42,7 +38,6 @@ export const useAuthStore = create<AuthState>()(
           isLoggedIn: false,
           role: null,
           user: null,
-          token: null,
         });
       },
     }),

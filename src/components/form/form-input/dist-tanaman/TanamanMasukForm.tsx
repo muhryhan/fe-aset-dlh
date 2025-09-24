@@ -11,6 +11,7 @@ import { CalenderIcon } from "../../../../icons";
 
 import api from "../../../../services/api";
 import { TanamanMasukData } from "../../../../types/tanamanMasuk";
+import { formatDate } from "../../../../utils/dateUtils";
 import {
   createInputHandler,
   createDateHandler,
@@ -39,7 +40,7 @@ export default function TanamanMasukForm({
     id_tanaman:
       initialData?.id_tanaman ??
       (id_tanaman ? parseInt(id_tanaman) : undefined),
-    tanggal: initialData?.tanggal ?? "",
+    tanggal: formatDate(initialData?.tanggal) ?? "",
     jumlah: initialData?.jumlah ?? 0,
     keterangan: initialData?.keterangan ?? "",
   });
@@ -139,7 +140,7 @@ export default function TanamanMasukForm({
           />
         </div>
         <div>
-          <Label htmlFor="tanggal">Tanggal Servis</Label>
+          <Label htmlFor="tanggal">Tanggal Masuk</Label>
           <div className="relative">
             <Flatpickr
               value={formData.tanggal?.toString()}

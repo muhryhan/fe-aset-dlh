@@ -1,6 +1,6 @@
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
-import logo from "../icons/logo-kota-palu.png";
+import logo from "../../public/images/logo/logo-kota-palu.png";
 
 export function handleExportPdf(
   headers: string[],

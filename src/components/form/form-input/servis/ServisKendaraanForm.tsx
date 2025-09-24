@@ -56,7 +56,13 @@ export default function ServiceKendaraanForm({
   } = useForm<ServisData>({
     initialData,
     endpoint: "/api/servis",
-    requiredFields: ["tanggal", "nama_bengkel", "biaya_servis", "nota_pembayaran", "dokumentasi"],
+    requiredFields: [
+      "tanggal",
+      "nama_bengkel",
+      "biaya_servis",
+      "nota_pembayaran",
+      "dokumentasi",
+    ],
     idKey: "id_servis",
     onSuccess,
     additionalPayload,
@@ -149,7 +155,7 @@ export default function ServiceKendaraanForm({
           <Label htmlFor="tanggal">Tanggal Servis</Label>
           <div className="relative">
             <Flatpickr
-              value={formData.tanggal?.toString()}
+              value={formData.tanggal}
               onChange={(dates) => handleDateChange(dates, "tanggal")}
               options={{ dateFormat: "Y-m-d" }}
               placeholder="Pilih tanggal"

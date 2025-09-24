@@ -1,17 +1,19 @@
+import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
-import Cookies from "js-cookie";
-import { ReactNode } from "react";
+import api from "../services/api";
 
-interface ProtectedRouteProps {
-  children: ReactNode;
-}
+const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
+  const [isValid, setIsValid] = useState<boolean | null>(null);
 
-const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
-  const token = Cookies.get("token");
+  useEffect(() => {
+    api
+      .get("/check-token")
+      .then(() => setIsValid(true))
+      .catch(() => setIsValid(false));
+  }, []);
 
-  if (!token) {
-    return <Navigate to="/" replace />;
-  }
+  if (isValid === null) return <p>Loading...</p>;
+  if (!isValid) return <Navigate to="/" replace />;
 
   return <>{children}</>;
 };

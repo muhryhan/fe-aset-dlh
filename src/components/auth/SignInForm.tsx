@@ -26,19 +26,19 @@ export default function SignInForm() {
     setLoading(true);
 
     try {
-      const response = await api.post("/api/login", { username, password });
-      const token = response.data.token;
+      const response = await api.post(
+        "/api/login",
+        { username, password },
+        { withCredentials: true }
+      );
+
       const role = response.data.role;
       const user = {
         id: response.data.id_user,
         name: response.data.username,
       };
 
-      login({ token, role, user });
-
-      document.cookie = `token=${token}; path=/;`;
-      document.cookie = `id_user=${user.id}; path=/;`;
-      document.cookie = `username=${user.name}; path=/;`;
+      login({ role, user });
 
       navigate("/home");
     } catch (err) {
@@ -57,7 +57,10 @@ export default function SignInForm() {
     <div className="flex flex-col flex-1">
       <div className="flex flex-col justify-center flex-1 w-full max-w-md mx-auto">
         <div>
-          <div className="flex justify-center mb-6">
+          <div className="flex flex-col items-center justify-center mb-6 gap-2">
+            <p className="text-sm text-gray-500 dark:text-white">
+              Klik untuk melakukan scan QR Code
+            </p>
             <Link to="/scan">
               <QRIcon className="w-40 h-40 text-brand-500 dark:text-white cursor-pointer hover:scale-105 transition-transform duration-300" />
             </Link>

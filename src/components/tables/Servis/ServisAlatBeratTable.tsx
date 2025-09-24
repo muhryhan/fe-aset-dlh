@@ -157,6 +157,7 @@ export default function ServiceAlatBeratTable() {
           <ExcelButton
             onClick={() =>
               handleExportExcel(
+                exportHeaders,
                 exportRows,
                 `Data Servis ${no_registrasi ?? "Alat Berat"}`
               )
