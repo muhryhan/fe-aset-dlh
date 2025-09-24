@@ -101,26 +101,55 @@ const QrScanner = () => {
     setScanning(false);
   };
 
+  // ======= HANDLE UPLOAD IMAGE QR CODE =======
   const handleFileUpload = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const file = event.target.files?.[0];
     if (!file) return;
 
-    const imageUrl = URL.createObjectURL(file);
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = async () => {
+        try {
+          // Resize image jika terlalu besar
+          const maxDim = 1024;
+          const scale = Math.min(maxDim / img.width, maxDim / img.height, 1);
 
-    try {
-      const result = await codeReaderRef.current?.decodeFromImageUrl(imageUrl);
-      if (result) {
-        setResult(result.getText());
-      } else {
-        setError("QR Code tidak ditemukan dalam gambar.");
-      }
-    } catch {
-      setError("Gagal membaca QR Code dari gambar.");
-    } finally {
-      URL.revokeObjectURL(imageUrl);
-    }
+          const canvas = document.createElement("canvas");
+          canvas.width = img.width * scale;
+          canvas.height = img.height * scale;
+          const ctx = canvas.getContext("2d");
+          if (!ctx) throw new Error("Canvas context tidak tersedia");
+
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+          const result = await codeReaderRef.current?.decodeFromCanvas(canvas);
+          if (result) {
+            setResult(result.getText());
+            setError(null);
+          } else {
+            setError("QR Code tidak ditemukan dalam gambar.");
+          }
+        } catch (err) {
+          console.error(err);
+          setError("Gagal membaca QR Code dari gambar.");
+        }
+      };
+
+      img.onerror = () => {
+        setError("Gagal memuat gambar.");
+      };
+
+      img.src = e.target?.result as string;
+    };
+
+    reader.onerror = () => {
+      setError("Gagal membaca file.");
+    };
+
+    reader.readAsDataURL(file);
   };
 
   const renderTanggal = (tanggal?: string) =>
@@ -134,7 +163,6 @@ const QrScanner = () => {
             SCAN QR CODE
           </h1>
 
-          {/* Tombol Scan Kamera */}
           <button
             onClick={startCameraScan}
             className="w-full sm:max-w-sm flex items-center justify-center gap-3 
@@ -147,7 +175,6 @@ const QrScanner = () => {
             <span className="text-xl sm:text-2xl">📷</span> Scan dari Kamera
           </button>
 
-          {/* Kamera aktif (muncul di antara tombol Scan & Upload) */}
           {scanning && (
             <video
               ref={videoRef}
@@ -159,7 +186,6 @@ const QrScanner = () => {
             />
           )}
 
-          {/* Tombol Upload Gambar */}
           <label
             className="w-full sm:max-w-sm flex items-center justify-center gap-3 
                     bg-gradient-to-r from-green-900 to-green-500 
@@ -180,7 +206,6 @@ const QrScanner = () => {
         </>
       )}
 
-      {/* Hasil Scan */}
       {result && (
         <div className="text-center space-y-6 w-full">
           <p
@@ -263,7 +288,6 @@ const QrScanner = () => {
             </div>
           )}
 
-          {/* Tombol Reset */}
           <button
             onClick={resetScanner}
             className="mt-4 w-full sm:max-w-md flex items-center justify-center gap-2
