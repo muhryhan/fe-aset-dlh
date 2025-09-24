@@ -1,4 +1,4 @@
-// Input Ke Form
+// Format Form
 export function localDate(dateStr: string | Date): string {
   const date = typeof dateStr === "string" ? new Date(dateStr) : dateStr;
   const offset = date.getTimezoneOffset();
@@ -6,12 +6,15 @@ export function localDate(dateStr: string | Date): string {
   return localDate.toISOString().split("T")[0];
 }
 
-// Tampilan UI
+// Format UI
 export function formatDate(input?: string) {
   const utcDate = new Date(String(input));
-  const localWitaDate = utcDate.toLocaleDateString("id-ID", {
+  const formatter = Intl.DateTimeFormat("en-CA", {
     timeZone: "Asia/Makassar",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
   });
 
-  return localWitaDate;
+  return formatter.format(utcDate);
 }

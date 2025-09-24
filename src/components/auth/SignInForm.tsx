@@ -26,19 +26,19 @@ export default function SignInForm() {
     setLoading(true);
 
     try {
-      const response = await api.post("/api/login", { username, password });
-      const token = response.data.token;
+      const response = await api.post(
+        "/api/login",
+        { username, password },
+        { withCredentials: true }
+      );
+
       const role = response.data.role;
       const user = {
         id: response.data.id_user,
         name: response.data.username,
       };
 
-      login({ token, role, user });
-
-      document.cookie = `token=${token}; path=/;`;
-      document.cookie = `id_user=${user.id}; path=/;`;
-      document.cookie = `username=${user.name}; path=/;`;
+      login({ role, user });
 
       navigate("/home");
     } catch (err) {

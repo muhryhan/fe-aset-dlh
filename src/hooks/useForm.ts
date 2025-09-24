@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { validateRequiredFields } from "../utils/validateUtils";
 import { buildFormData, resetForm } from "../utils/formUtils";
 import api from "../services/api";
+import { formatDate } from "../utils/dateUtils";
 
 type AlertState = {
   variant: "success" | "warning" | "error";
@@ -31,9 +32,22 @@ export function useForm<T extends Record<string, unknown>>({
   skipKeys = [],
   emptyTemplate,
 }: UseFormOptions<T>) {
-  const [formData, setFormData] = useState<T>(() => {
-    return (initialData as T) || (emptyTemplate as T) || ({} as T);
+  const [formData, setFormData] = useState<Partial<T>>(() => {
+    if (initialData) {
+      return {
+        ...initialData,
+        pajak: initialData.pajak ? formatDate(String(initialData.pajak)) : "",
+        tanggal_sertifikat: initialData.tanggal_sertifikat
+          ? formatDate(String(initialData.tanggal_sertifikat))
+          : "",
+        tanggal: initialData.tanggal
+          ? formatDate(String(initialData.tanggal))
+          : "",
+      };
+    }
+    return {};
   });
+
   const [alertMessage, setAlertMessage] = useState<AlertState>(null);
   const isEdit = !!initialData?.[idKey];
 
