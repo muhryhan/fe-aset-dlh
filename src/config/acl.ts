@@ -21,12 +21,13 @@ const RESOURCES = [
 
 const FULL_ACCESS: Permission[] = ["create", "read", "update", "delete"];
 const LIMITED_ACCESS: Permission[] = ["create", "read"];
+const READ_ACCESS: Permission[] = ["read"];
 
 const createAccessMap = (permissions: Permission[]) =>
   Object.fromEntries(RESOURCES.map((res) => [res, permissions]));
 
 export const ACL = {
-  kepalaDinas: createAccessMap(FULL_ACCESS),
+  kepalaDinas: createAccessMap(READ_ACCESS),
   bendahara: createAccessMap(FULL_ACCESS),
   admin: createAccessMap(LIMITED_ACCESS),
 };

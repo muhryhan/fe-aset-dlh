@@ -85,12 +85,14 @@ export default function TanamanMasukTable() {
     <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
       <div className="p-4 flex flex-wrap gap-2 items-center justify-between">
         <div className="flex gap-2 items-center">
-          <AddButton
-            onClick={() => {
-              setSelected(null);
-              setIsModalOpen(true);
-            }}
-          />
+          {role && hakAkses(role, "tanamanMasuk", "create") && (
+            <AddButton
+              onClick={() => {
+                setSelected(null);
+                setIsModalOpen(true);
+              }}
+            />
+          )}
         </div>
         <div className="flex gap-2 items-center">
           <SearchInput value={search} onChange={setSearch} />
