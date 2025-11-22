@@ -8,6 +8,7 @@ import { handleExportExcel } from "../../handler/handleExportExcel";
 import { handleExportPdf } from "../../handler/handleExportPdf";
 import { hakAkses } from "../../utils/aclUtils";
 import { useAuthStore } from "../../stores/authStore";
+import { downloadQR } from "../../handler/handleQrDownloader";
 
 import SearchInput from "../ui/search/Search";
 import {
@@ -64,6 +65,17 @@ export default function AlatKerjaTable() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selected, setSelected] = useState<AlatKerjaData | null>(null);
 
+  const handleDownloadQR = (data: AlatKerjaData) => {
+    downloadQR({
+      imageUrl: `${BASE_URL}/static/uploads/alatkerja/qrcode/${data.qrcode}`,
+      fileName: `QR_${data.no_registrasi}`,
+      labels: [
+        { label: "Kode Aset", value: data.no_registrasi },
+        { label: "Merek Alat", value: data.merek },
+      ],
+    });
+  };
+
   const handleEdit = async (no_registrasi: string) => {
     try {
       const res = await api.get(`/api/alatkerja/${no_registrasi}`);
@@ -91,14 +103,12 @@ export default function AlatKerjaTable() {
     {
       header: "QR Code",
       accessor: (d: AlatKerjaData) => (
-        <a
-          href={`${BASE_URL}/static/uploads/alatKerja/qrcode/${d.qrcode}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-blue-500 underline"
+        <button
+          onClick={() => handleDownloadQR(d)}
+          className="bg-gray-200 text-blue-600 px-3 py-1 rounded hover:bg-blue-600 hover:text-gray-200"
         >
-          Lihat
-        </a>
+          Unduh QR
+        </button>
       ),
     },
     {
@@ -108,7 +118,7 @@ export default function AlatKerjaTable() {
           href={`${BASE_URL}/static/uploads/alatKerja/${d.gambar}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-blue-500 underline"
+          className="bg-gray-200 text-blue-600 px-3 py-1 rounded hover:bg-blue-600 hover:text-gray-200"
         >
           Lihat
         </a>
@@ -168,12 +178,14 @@ export default function AlatKerjaTable() {
     <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
       <div className="p-4 flex flex-wrap gap-2 items-center justify-between">
         <div className="flex gap-2 items-center">
-          <AddButton
-            onClick={() => {
-              setSelected(null);
-              setIsModalOpen(true);
-            }}
-          />
+          {role && hakAkses(role, "alatKerja", "create") && (
+            <AddButton
+              onClick={() => {
+                setSelected(null);
+                setIsModalOpen(true);
+              }}
+            />
+          )}
         </div>
         <div className="flex gap-2 items-center">
           <SearchInput value={search} onChange={setSearch} />

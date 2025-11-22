@@ -145,12 +145,14 @@ export default function ServiceKendaraanTable() {
   return (
     <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
       <div className="p-4 flex flex-wrap gap-2 items-center justify-between">
-        <AddButton
-          onClick={() => {
-            setSelected(null);
-            setIsModalOpen(true);
-          }}
-        />
+        {role && hakAkses(role, "servisKendaraan", "create") && (
+            <AddButton
+              onClick={() => {
+                setSelected(null);
+                setIsModalOpen(true);
+              }}
+            />
+          )}
         <div className="flex gap-2 items-center">
           <SearchInput value={search} onChange={setSearch} />
           <ExcelButton
@@ -264,7 +266,7 @@ export default function ServiceKendaraanTable() {
                                 <a
                                   href={`${BASE_URL}/static/uploads/servis/nota/${item.nota_pembayaran}`}
                                   target="_blank"
-                                  className="text-blue-500 underline"
+                                  className="bg-gray-200 text-blue-600 px-3 py-1 rounded hover:bg-blue-600 hover:text-gray-200"
                                 >
                                   Lihat
                                 </a>
@@ -276,7 +278,7 @@ export default function ServiceKendaraanTable() {
                                 <a
                                   href={`${BASE_URL}/static/uploads/servis/dokumentasi/${item.dokumentasi}`}
                                   target="_blank"
-                                  className="text-blue-500 underline"
+                                  className="bg-gray-200 text-blue-600 px-3 py-1 rounded hover:bg-blue-600 hover:text-gray-200"
                                 >
                                   Lihat
                                 </a>
@@ -357,7 +359,7 @@ export default function ServiceKendaraanTable() {
                           <a
                             href={`${BASE_URL}/static/uploads/servis/nota/${item.nota_pembayaran}`}
                             target="_blank"
-                            className="text-blue-500 underline"
+                            className="bg-gray-200 text-blue-600 px-3 py-1 rounded hover:bg-blue-600 hover:text-gray-200"
                           >
                             Lihat
                           </a>
@@ -366,7 +368,7 @@ export default function ServiceKendaraanTable() {
                           <a
                             href={`${BASE_URL}/static/uploads/servis/dokumentasi/${item.dokumentasi}`}
                             target="_blank"
-                            className="text-blue-500 underline"
+                            className="bg-gray-200 text-blue-600 px-3 py-1 rounded hover:bg-blue-600 hover:text-gray-200"
                           >
                             Lihat
                           </a>

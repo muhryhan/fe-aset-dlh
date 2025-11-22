@@ -32,6 +32,8 @@ import { KendaraanData } from "../../types/kendaraan";
 import { hakAkses } from "../../utils/aclUtils";
 import { useAuthStore } from "../../stores/authStore";
 
+import { downloadQR } from "../../handler/handleQrDownloader";
+
 export default function KendaraanTable() {
   const role = useAuthStore((s) => s.role);
   const { no_polisi } = useParams<{ no_polisi: string }>();
@@ -67,6 +69,17 @@ export default function KendaraanTable() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selected, setSelected] = useState<KendaraanData | null>(null);
 
+  const handleDownloadQR = (data: KendaraanData) => {
+    downloadQR({
+      imageUrl: `${BASE_URL}/static/uploads/kendaraan/qrcode/${data.qrcode}`,
+      fileName: `QR_${data.no_polisi}`,
+      labels: [
+        { label: "Kode Aset", value: data.no_polisi },
+        { label: "Nama Kendaraan", value: data.merek },
+      ],
+    });
+  };
+
   const handleEdit = async (no_polisi: string) => {
     try {
       const res = await api.get(`/api/kendaraan/${no_polisi}`);
@@ -94,14 +107,12 @@ export default function KendaraanTable() {
     {
       header: "QR Code",
       accessor: (d: KendaraanData) => (
-        <a
-          href={`${BASE_URL}/static/uploads/kendaraan/qrcode/${d.qrcode}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-blue-500 underline"
+        <button
+          onClick={() => handleDownloadQR(d)}
+          className="bg-gray-200 text-blue-600 px-3 py-1 rounded hover:bg-blue-600 hover:text-gray-200"
         >
-          Lihat
-        </a>
+          Unduh QR
+        </button>
       ),
     },
     {
@@ -111,7 +122,7 @@ export default function KendaraanTable() {
           href={`${BASE_URL}/static/uploads/kendaraan/${d.gambar}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-blue-500 underline"
+          className="bg-gray-200 text-blue-600 px-3 py-1 rounded hover:bg-blue-600 hover:text-gray-200"
         >
           Lihat
         </a>
@@ -172,12 +183,14 @@ export default function KendaraanTable() {
     <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
       <div className="p-4 flex flex-wrap gap-2 items-center justify-between">
         <div className="flex gap-2 items-center">
-          <AddButton
-            onClick={() => {
-              setSelected(null);
-              setIsModalOpen(true);
-            }}
-          />
+          {role && hakAkses(role, "kendaraan", "create") && (
+            <AddButton
+              onClick={() => {
+                setSelected(null);
+                setIsModalOpen(true);
+              }}
+            />
+          )}
         </div>
         <div className="flex gap-2 items-center flex-shrink-0">
           <SearchInput value={search} onChange={setSearch} />

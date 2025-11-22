@@ -96,7 +96,7 @@ export default function TanahTable() {
           href={`${BASE_URL}/static/uploads/tanah/${d.gambar}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-blue-500 underline"
+          className="bg-gray-200 text-blue-600 px-3 py-1 rounded hover:bg-blue-600 hover:text-gray-200"
         >
           Lihat
         </a>
@@ -177,12 +177,14 @@ export default function TanahTable() {
     <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
       <div className="p-4 flex flex-wrap gap-2 items-center justify-between">
         <div className="flex gap-2 items-center">
-          <AddButton
-            onClick={() => {
-              setSelected(null);
-              setIsModalOpen(true);
-            }}
-          />
+          {role && hakAkses(role, "tanah", "create") && (
+            <AddButton
+              onClick={() => {
+                setSelected(null);
+                setIsModalOpen(true);
+              }}
+            />
+          )}
         </div>
         <div className="flex gap-2 items-center">
           <SearchInput value={search} onChange={setSearch} />
