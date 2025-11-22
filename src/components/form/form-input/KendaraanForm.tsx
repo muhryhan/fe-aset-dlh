@@ -97,6 +97,7 @@ export default function KendaraanFormInput({ initialData, onSuccess }: Props) {
   const handleDateChange = createDateHandler(setFormData);
   const handleFileChange = createFileHandler(setFormData);
 
+  // console.log(formData);
   return (
     <ComponentCard title="Masukkan Data Kendaraan">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2 w-full">

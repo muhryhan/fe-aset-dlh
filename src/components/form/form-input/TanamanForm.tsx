@@ -107,6 +107,7 @@ export default function TanamanFormInput({ initialData, onSuccess }: Props) {
             value={formData.stok}
             onChange={handleInputChange}
             inputMode="numeric"
+            disabled
           />
         </div>
         <div>
