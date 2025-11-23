@@ -117,7 +117,7 @@ export default function AlatBeratTable() {
       header: "Gambar",
       accessor: (d: AlatBeratData) => (
         <a
-          href={`${BASE_URL}/static/uploads/alatBerat/${d.gambar}`}
+          href={`${BASE_URL}/static/uploads/alatberat/${d.gambar}`}
           target="_blank"
           rel="noopener noreferrer"
           className="bg-gray-200 text-blue-600 px-3 py-1 rounded hover:bg-blue-600 hover:text-gray-200"

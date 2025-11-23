@@ -115,7 +115,7 @@ export default function AlatKerjaTable() {
       header: "Gambar",
       accessor: (d: AlatKerjaData) => (
         <a
-          href={`${BASE_URL}/static/uploads/alatKerja/${d.gambar}`}
+          href={`${BASE_URL}/static/uploads/alatkerja/${d.gambar}`}
           target="_blank"
           rel="noopener noreferrer"
           className="bg-gray-200 text-blue-600 px-3 py-1 rounded hover:bg-blue-600 hover:text-gray-200"
