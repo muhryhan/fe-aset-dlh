@@ -2,7 +2,7 @@ import axios from "axios";
 import { forceLogout } from "./auth";
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL_BASE,
+  baseURL: import.meta.env.VITE_BASE_URL,
   headers: {
     "ngrok-skip-browser-warning": "69420",
   },
