@@ -55,7 +55,7 @@ export default function KendaraanTable() {
       item.kondisi.toLowerCase().includes(query)
   );
 
-  const BASE_URL = import.meta.env.VITE_BASE_URL || "http://localhost:3000";
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
 
   const {
     currentPage,
